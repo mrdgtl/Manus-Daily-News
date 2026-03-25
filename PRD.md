@@ -57,8 +57,9 @@ Stories are selected and ranked based on the following criteria:
 5.  Large funding, partnerships, or strategic moves
 
 ## 8. Schedule & Delivery
-*   **Schedule:** Daily at 5:00 AM ET, covering the past 24 hours.
-*   **Manual Trigger:** Available via the "Start AI news briefing" command.
+*   **Schedule:** Every Tuesday, Thursday, and Saturday at 5:00 AM ET. Each briefing covers the period since the last run (approximately 2-3 days).
+*   **Configurable Schedule:** The active briefing days are user-configurable. Manu can change which days are enabled at any time by simply requesting the change. The system must support enabling or disabling any combination of days without requiring technical changes.
+*   **Manual Trigger:** Available at any time via the "Start AI news briefing" command, independent of the scheduled days.
 *   **Delivery Methods:**
     *   Primary: Telegram
     *   Secondary: Files committed to the GitHub repository (`mrdgtl/Manus-Daily-News`) under the `briefings/` folder.

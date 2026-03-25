@@ -21,8 +21,9 @@ This document serves as the implementation plan for the Manus Daily News project
 **Objective:** Get the system running autonomously on a daily schedule.
 
 *   **Key Tasks:**
-    *   Set up a daily 5:00 AM ET scheduled trigger within Manus.
-    *   Establish a manual "Start AI news briefing" command for on-demand execution.
+    *   Set up a scheduled trigger for Tuesday, Thursday, and Saturday at 5:00 AM ET within Manus.
+    *   Implement configurable schedule days — Manu can change which days are active via a simple request, without requiring any technical changes.
+    *   Establish a manual "Start AI news briefing" command for on-demand execution, independent of the scheduled days.
     *   Automate the delivery of the final briefing to Telegram.
     *   Automate committing the generated briefings to the GitHub repository under the `briefings/` folder.
     *   Configure the GitHub push mechanism using the classic Personal Access Token (PAT).
