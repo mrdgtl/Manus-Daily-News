@@ -2,7 +2,7 @@
 **Project Name:** Manus Daily News & AI Daily Source
 
 ## Introduction
-This document serves as the implementation plan for the project, which now consists of two distinct but connected tracks:
+This document serves as the implementation plan for the project, which consists of two distinct but connected tracks:
 
 *   **Track 1: Manus Daily News** — The core AI news briefing system that researches, verifies, and produces structured text briefings.
 *   **Track 2: AI Daily Source** — The content pipeline that transforms the briefings from Track 1 into short-form video content for TikTok and Instagram.
@@ -20,7 +20,7 @@ Track 2 depends entirely on Track 1 as its input source. This Roadmap outlines t
 | **1: Daily News** | **Phase 5** | Distribution | Not Started |
 | **1: Daily News** | **Phase 6** | Community / Sharing | Not Started |
 | **2: Daily Source** | **Phase 1** | Script Pipeline | In Progress |
-| **2: Daily Source** | **Phase 2** | Video Production | Not Started |
+| **2: Daily Source** | **Phase 2** | Content Pipeline & Video Production | In Progress |
 | **2: Daily Source** | **Phase 3** | Manual Posting & Feedback | Not Started |
 | **2: Daily Source** | **Phase 4** | Automated Distribution | Not Started |
 | **2: Daily Source** | **Phase 5** | Community Management | Not Started |
@@ -30,7 +30,7 @@ Track 2 depends entirely on Track 1 as its input source. This Roadmap outlines t
 
 ## Track 1: Manus Daily News
 
-### Phase 1 — Automation (Current/Next)
+### Phase 1 — Automation (Nearly Complete)
 **Objective:** Get the system running autonomously on a daily schedule.
 
 *   **Key Tasks:**
@@ -45,7 +45,7 @@ Track 2 depends entirely on Track 1 as its input source. This Roadmap outlines t
 *   **Dependencies:** GitHub PAT (Completed), repository setup (Completed), first briefing template (Completed).
 *   **Risks:** Manus scheduling reliability and the credit consumption required per daily run.
 
-### Phase 2 — Refinement
+### Phase 2 — Refinement (Not Started)
 **Objective:** Improve briefing quality based on real daily usage and user feedback.
 
 *   **Key Tasks:**
@@ -60,7 +60,7 @@ Track 2 depends entirely on Track 1 as its input source. This Roadmap outlines t
 *   **Dependencies:** Phase 1 must be complete (daily briefings are running reliably).
 *   **Risks:** Quality is subjective; establishing a clear and actionable feedback loop is critical.
 
-### Phase 3 — Pipeline Hardening
+### Phase 3 — Pipeline Hardening (Not Started)
 **Objective:** Make the system robust, resilient, and error-tolerant.
 
 *   **Key Tasks:**
@@ -75,7 +75,7 @@ Track 2 depends entirely on Track 1 as its input source. This Roadmap outlines t
 *   **Dependencies:** Phase 2 must be complete (a stable quality baseline has been established).
 *   **Risks:** Over-engineering the pipeline; checks must remain pragmatic and not overly complicate the workflow.
 
-### Phase 4 — Intelligence Layer
+### Phase 4 — Intelligence Layer (Not Started)
 **Objective:** Add cross-day memory and evolving story tracking to the system.
 
 *   **Key Tasks:**
@@ -89,7 +89,7 @@ Track 2 depends entirely on Track 1 as its input source. This Roadmap outlines t
 *   **Dependencies:** Phase 3 must be complete (the pipeline is reliable), and a sufficient history of briefings must be accumulated.
 *   **Risks:** System complexity; the intelligence layer needs to remain elegant and not become over-built or fragile.
 
-### Phase 5 — Distribution
+### Phase 5 — Distribution (Not Started)
 **Objective:** Expand delivery channels beyond the initial Telegram integration.
 
 *   **Key Tasks:**
@@ -102,7 +102,7 @@ Track 2 depends entirely on Track 1 as its input source. This Roadmap outlines t
 *   **Dependencies:** Phase 2 and beyond must be complete (the briefings must be stable and of high enough quality to warrant broader distribution).
 *   **Risks:** Scope creep; it is vital to pick one new channel to implement first before expanding further.
 
-### Phase 6 — Community / Sharing
+### Phase 6 — Community / Sharing (Not Started)
 **Objective:** Enable broader audience access and public sharing, if desired.
 
 *   **Key Tasks:**
@@ -119,7 +119,7 @@ Track 2 depends entirely on Track 1 as its input source. This Roadmap outlines t
 
 ## Track 2: AI Daily Source
 
-### Phase 1 — Script Pipeline (Current)
+### Phase 1 — Script Pipeline (In Progress)
 **Objective:** Prove that briefings can be reliably converted into high-quality video scripts.
 
 *   **Key Tasks:**
@@ -130,38 +130,39 @@ Track 2 depends entirely on Track 1 as its input source. This Roadmap outlines t
 *   **Deliverables:** Article extraction workflow, script writing prompts, 10+ sample scripts, read-aloud validation.
 *   **Dependencies:** Manus Daily News briefings (Track 1).
 
-### Phase 2 — Video Production
-**Objective:** Prove that scripts can be turned into watchable videos.
+### Phase 2 — Content Pipeline & Video Production (In Progress)
+**Objective:** Prove that scripts can be turned into watchable videos and establish the production pipeline.
 
 *   **Key Tasks:**
-    *   Evaluate AI voiceover options (quality vs cost).
-    *   Evaluate video generation/assembly options.
-    *   Produce first sample videos.
-    *   Validate video quality.
-*   **Deliverables:** Voiceover tool selection, visual style guide, 5+ sample videos, quality validation.
+    *   Lock in tool choices: ElevenLabs (TTS, "MQ-4-news" voice), Manus native tools (Veo 3.1, Nano Banana Pro), FFmpeg (assembly).
+    *   Set up Google Sheets for content pipeline organization (CSV template created).
+    *   Set up Google Drive for video storage/delivery (in progress).
+    *   Produce first sample videos (Proven: 37-second vertical 9:16 video successfully produced end-to-end).
+    *   Validate video quality and establish a volume target of 3-5 videos per briefing day.
+*   **Deliverables:** Voiceover tool selection, visual style guide, sample videos, quality validation, established Google Sheets pipeline.
 *   **Dependencies:** Validated scripts from Phase 1.
 
-### Phase 3 — Manual Posting & Feedback
+### Phase 3 — Manual Posting & Feedback (Not Started)
 **Objective:** Prove that the content resonates with a real audience.
 
 *   **Key Tasks:**
-    *   Manually post first videos to AI Daily Source channels.
+    *   Manually post first videos to AI Daily Source channels (TikTok/Instagram).
     *   Gather audience feedback and engagement metrics.
     *   Refine scripts, voice, and visual style based on what works.
 *   **Deliverables:** Published videos, engagement metrics, audience feedback, style refinements.
 *   **Dependencies:** Sample videos from Phase 2.
 
-### Phase 4 — Automated Distribution
+### Phase 4 — Automated Distribution (Not Started)
 **Objective:** Remove manual bottlenecks from the posting process.
 
 *   **Key Tasks:**
-    *   Set up automated or semi-automated posting.
+    *   Set up automated or semi-automated posting using Make.com (free tier).
     *   Implement automated caption generation with source links and hashtags.
     *   Optimize posting schedule based on analytics.
 *   **Deliverables:** Scheduling tool integration, automated caption generation, posting cadence optimization.
 *   **Dependencies:** Validated content from Phase 3.
 
-### Phase 5 — Community Management
+### Phase 5 — Community Management (Not Started)
 **Objective:** Build and maintain an engaged audience.
 
 *   **Key Tasks:**
@@ -171,7 +172,7 @@ Track 2 depends entirely on Track 1 as its input source. This Roadmap outlines t
 *   **Deliverables:** Comment response personas, AI response system, moderation workflow.
 *   **Dependencies:** Active channels from Phase 4.
 
-### Phase 6 — Scale & Clone
+### Phase 6 — Scale & Clone (Not Started)
 **Objective:** Replicate the pipeline for the secondary channel.
 
 *   **Key Tasks:**
