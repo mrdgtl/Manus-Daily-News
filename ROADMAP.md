@@ -1,23 +1,36 @@
 # Project Roadmap
-**Project Name:** Manus Daily News — AI News Agentic Flow
+**Project Name:** Manus Daily News & AI Daily Source
 
 ## Introduction
-This document serves as the implementation plan for the Manus Daily News project. While the Product Requirements Document (PRD) defines the "what" and "why" of the system, this Roadmap outlines the "how" and "when." It breaks down the project's evolution into six actionable phases, providing a clear, ordered plan for development. This is a living document that will be updated as progress is made and priorities shift.
+This document serves as the implementation plan for the project, which now consists of two distinct but connected tracks:
+
+*   **Track 1: Manus Daily News** — The core AI news briefing system that researches, verifies, and produces structured text briefings.
+*   **Track 2: AI Daily Source** — The content pipeline that transforms the briefings from Track 1 into short-form video content for TikTok and Instagram.
+
+Track 2 depends entirely on Track 1 as its input source. This Roadmap outlines the "how" and "when" for both tracks, breaking down their evolution into actionable phases. This is a living document that will be updated as progress is made and priorities shift.
 
 ## Status Overview
 
-| Phase | Focus | Status |
-| :--- | :--- | :--- |
-| **Phase 1** | Automation | In Progress |
-| **Phase 2** | Refinement | Not Started |
-| **Phase 3** | Pipeline Hardening | Not Started |
-| **Phase 4** | Intelligence Layer | Not Started |
-| **Phase 5** | Distribution | Not Started |
-| **Phase 6** | Community / Sharing | Not Started |
+| Track | Phase | Focus | Status |
+| :--- | :--- | :--- | :--- |
+| **1: Daily News** | **Phase 1** | Automation | Nearly Complete |
+| **1: Daily News** | **Phase 2** | Refinement | Not Started |
+| **1: Daily News** | **Phase 3** | Pipeline Hardening | Not Started |
+| **1: Daily News** | **Phase 4** | Intelligence Layer | Not Started |
+| **1: Daily News** | **Phase 5** | Distribution | Not Started |
+| **1: Daily News** | **Phase 6** | Community / Sharing | Not Started |
+| **2: Daily Source** | **Phase 1** | Script Pipeline | In Progress |
+| **2: Daily Source** | **Phase 2** | Video Production | Not Started |
+| **2: Daily Source** | **Phase 3** | Manual Posting & Feedback | Not Started |
+| **2: Daily Source** | **Phase 4** | Automated Distribution | Not Started |
+| **2: Daily Source** | **Phase 5** | Community Management | Not Started |
+| **2: Daily Source** | **Phase 6** | Scale & Clone | Not Started |
 
 ---
 
-## Phase 1 — Automation (Current/Next)
+## Track 1: Manus Daily News
+
+### Phase 1 — Automation (Current/Next)
 **Objective:** Get the system running autonomously on a daily schedule.
 
 *   **Key Tasks:**
@@ -32,7 +45,7 @@ This document serves as the implementation plan for the Manus Daily News project
 *   **Dependencies:** GitHub PAT (Completed), repository setup (Completed), first briefing template (Completed).
 *   **Risks:** Manus scheduling reliability and the credit consumption required per daily run.
 
-## Phase 2 — Refinement
+### Phase 2 — Refinement
 **Objective:** Improve briefing quality based on real daily usage and user feedback.
 
 *   **Key Tasks:**
@@ -47,7 +60,7 @@ This document serves as the implementation plan for the Manus Daily News project
 *   **Dependencies:** Phase 1 must be complete (daily briefings are running reliably).
 *   **Risks:** Quality is subjective; establishing a clear and actionable feedback loop is critical.
 
-## Phase 3 — Pipeline Hardening
+### Phase 3 — Pipeline Hardening
 **Objective:** Make the system robust, resilient, and error-tolerant.
 
 *   **Key Tasks:**
@@ -62,7 +75,7 @@ This document serves as the implementation plan for the Manus Daily News project
 *   **Dependencies:** Phase 2 must be complete (a stable quality baseline has been established).
 *   **Risks:** Over-engineering the pipeline; checks must remain pragmatic and not overly complicate the workflow.
 
-## Phase 4 — Intelligence Layer
+### Phase 4 — Intelligence Layer
 **Objective:** Add cross-day memory and evolving story tracking to the system.
 
 *   **Key Tasks:**
@@ -76,7 +89,7 @@ This document serves as the implementation plan for the Manus Daily News project
 *   **Dependencies:** Phase 3 must be complete (the pipeline is reliable), and a sufficient history of briefings must be accumulated.
 *   **Risks:** System complexity; the intelligence layer needs to remain elegant and not become over-built or fragile.
 
-## Phase 5 — Distribution
+### Phase 5 — Distribution
 **Objective:** Expand delivery channels beyond the initial Telegram integration.
 
 *   **Key Tasks:**
@@ -89,7 +102,7 @@ This document serves as the implementation plan for the Manus Daily News project
 *   **Dependencies:** Phase 2 and beyond must be complete (the briefings must be stable and of high enough quality to warrant broader distribution).
 *   **Risks:** Scope creep; it is vital to pick one new channel to implement first before expanding further.
 
-## Phase 6 — Community / Sharing
+### Phase 6 — Community / Sharing
 **Objective:** Enable broader audience access and public sharing, if desired.
 
 *   **Key Tasks:**
@@ -101,3 +114,68 @@ This document serves as the implementation plan for the Manus Daily News project
 *   **Definition of Done:** An external audience can successfully subscribe to and receive the daily briefings.
 *   **Dependencies:** Phase 5 must be complete (distribution infrastructure is in place), and Manu must make the strategic decision to take the project public.
 *   **Risks:** Content liability, managing audience expectations, and the ongoing maintenance burden of a public-facing product.
+
+---
+
+## Track 2: AI Daily Source
+
+### Phase 1 — Script Pipeline (Current)
+**Objective:** Prove that briefings can be reliably converted into high-quality video scripts.
+
+*   **Key Tasks:**
+    *   Build the article extraction process to isolate individual stories.
+    *   Develop the script writing workflow and prompt engineering.
+    *   Produce sample scripts from existing briefings.
+    *   Validate script quality (does it sound good read aloud?).
+*   **Deliverables:** Article extraction workflow, script writing prompts, 10+ sample scripts, read-aloud validation.
+*   **Dependencies:** Manus Daily News briefings (Track 1).
+
+### Phase 2 — Video Production
+**Objective:** Prove that scripts can be turned into watchable videos.
+
+*   **Key Tasks:**
+    *   Evaluate AI voiceover options (quality vs cost).
+    *   Evaluate video generation/assembly options.
+    *   Produce first sample videos.
+    *   Validate video quality.
+*   **Deliverables:** Voiceover tool selection, visual style guide, 5+ sample videos, quality validation.
+*   **Dependencies:** Validated scripts from Phase 1.
+
+### Phase 3 — Manual Posting & Feedback
+**Objective:** Prove that the content resonates with a real audience.
+
+*   **Key Tasks:**
+    *   Manually post first videos to AI Daily Source channels.
+    *   Gather audience feedback and engagement metrics.
+    *   Refine scripts, voice, and visual style based on what works.
+*   **Deliverables:** Published videos, engagement metrics, audience feedback, style refinements.
+*   **Dependencies:** Sample videos from Phase 2.
+
+### Phase 4 — Automated Distribution
+**Objective:** Remove manual bottlenecks from the posting process.
+
+*   **Key Tasks:**
+    *   Set up automated or semi-automated posting.
+    *   Implement automated caption generation with source links and hashtags.
+    *   Optimize posting schedule based on analytics.
+*   **Deliverables:** Scheduling tool integration, automated caption generation, posting cadence optimization.
+*   **Dependencies:** Validated content from Phase 3.
+
+### Phase 5 — Community Management
+**Objective:** Build and maintain an engaged audience.
+
+*   **Key Tasks:**
+    *   Design comment response personas for AI Daily Source.
+    *   Set up AI-powered comment responses.
+    *   Monitor and refine the moderation workflow.
+*   **Deliverables:** Comment response personas, AI response system, moderation workflow.
+*   **Dependencies:** Active channels from Phase 4.
+
+### Phase 6 — Scale & Clone
+**Objective:** Replicate the pipeline for the secondary channel.
+
+*   **Key Tasks:**
+    *   Clone the pipeline for the Volcaneer channel.
+    *   Adapt voice, style, and content selection for a different audience.
+*   **Deliverables:** Adapted pipeline, new brand voice, separate channel launch.
+*   **Dependencies:** Proven pipeline from Phases 1–5.
