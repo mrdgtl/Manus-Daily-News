@@ -19,8 +19,9 @@ Set the following fields:
 
 ## 3. SCRIPT GATE
 
-Only generate scripts for stories where Selection Approved = Approved AND Rank = Top 1, Top 2, or Top 3. After script generation, populate the following fields:
-- Script Status = Done
+**CRITICAL RULE: Script generation ONLY starts when Selection Approved = Approved AND Rank is Top 1, Top 2, or Top 3.**
+
+After script generation begins, update Script Status (Not Started → In Progress → Complete/Failed). Once complete, populate the following fields:
 - Script Link (URL to script in Drive)
 
 Self-evaluate the script on the following criteria:
@@ -28,15 +29,14 @@ Self-evaluate the script on the following criteria:
 - Clarity (1-5)
 - Flow (1-5)
 - TTS Pass (Yes/No)
-- Script Approved (Yes/No)
 
 **Quality threshold:** If Hook Strength < 4 OR Clarity < 4 OR Flow < 4 OR TTS Pass = No, automatically regenerate the script (up to 3 attempts). After regeneration attempts, if the script is still below the threshold, set Script Approved = No, Action Required = Review Script, and notify the user.
 
-If all scripts pass, set Pipeline Stage = Script, Action Required = None, and proceed automatically to production. Upload working scripts and TTS scripts to the Google Drive Scripts folder with the proper naming convention.
+If all scripts pass, set Script Approved = Yes, Pipeline Stage = Script, Action Required = None, and proceed automatically to production. Upload working scripts and TTS scripts to the Google Drive Scripts folder with the proper naming convention.
 
 ## 4. PRODUCTION GATE
 
-Only proceed if Script Approved = Yes. Generate voiceover via ElevenLabs API (voice: MQ-4-news, voice ID: h5auDwZge17EdlHgtS16). Update Voiceover Status as it progresses (Not Started → In Progress → Done/Failed). Generate visual assets (keyframes via Nano Banana Pro, animation via Veo 3.1). Update Visuals Status as it progresses. Assemble the final video via FFmpeg. Update Assembly Status.
+Only proceed if Script Approved = Yes. Generate voiceover via ElevenLabs API (voice: MQ-4-news, voice ID: h5auDwZge17EdlHgtS16). Update Voiceover Status as it progresses (Not Started → In Progress → Complete/Failed). Generate visual assets (keyframes via Nano Banana Pro, animation via Veo 3.1). Update Visuals Status as it progresses. Assemble the final video via FFmpeg. Update Assembly Status.
 
 After assembly, self-evaluate the video on the following criteria:
 - Video Quality Score (1-5)
@@ -55,17 +55,29 @@ Populate Final Video Link in the Sheet and set Pipeline Stage = Production.
 ## 5. FINAL APPROVAL GATE
 
 When the final video is ready and passes quality checks, set the following fields:
-- Video Approved = No (awaiting human review)
 - Action Required = Approve Video
 - Pipeline Stage = Ready
 
+*(Note: Video Approved remains blank until the user explicitly sets it to Yes or No. Do not use "No" to mean "awaiting review".)*
+
 **STOP** — Wait for human approval. Notify the user on Telegram: "3 videos produced and ready for review. Please approve in the Sheet." After the user sets Video Approved = Yes, set Action Required = Post, Pipeline Stage = Ready.
 
-## 6. FAILURE HANDLING
+## 6. POSTING AND ARCHIVING
+
+Once a video is posted, update Posted Status to Complete, set the Post Date, and change Pipeline Stage to Posted.
+
+**Archive Rule:** An item moves from the Pipeline tab to the Archive tab when:
+- Pipeline Stage = Posted AND Post Date is filled AND at least 7 days have passed since posting, OR
+- Pipeline Stage = Posted AND Performance Score has been recorded, OR
+- The item is manually archived by the user.
+
+When archiving: copy the entire row to the Archive tab, then delete it from the Pipeline tab.
+
+## 7. FAILURE HANDLING
 
 If any step fails, set Failure Type to the appropriate value: Script, Voice, Visual, Assembly, or Unknown. Set Retry Needed = Yes. Add a clear description in the Notes column explaining what failed and why. Do NOT fail silently — always notify the user on Telegram with the failure details. Do NOT proceed to the next stage until the failure is resolved.
 
-## 7. PIPELINE STAGE DISCIPLINE
+## 8. PIPELINE STAGE DISCIPLINE
 
 Always keep Pipeline Stage accurate and up to date:
 - **Intake** → story added to sheet
@@ -76,7 +88,7 @@ Always keep Pipeline Stage accurate and up to date:
 - **Posted** → video posted to social media
 - **Archived** → moved to Archive tab
 
-## 8. ACTION REQUIRED DISCIPLINE
+## 9. ACTION REQUIRED DISCIPLINE
 
 Always keep Action Required accurate:
 - **None** → no human action needed, pipeline can proceed
@@ -97,7 +109,7 @@ Once approved, the system generates scripts for the selected stories. Scripts un
 
 During Production, voiceovers and visual assets are generated, and the final video is assembled. The video undergoes another automated quality check. If it fails, the system attempts to fix and retry up to two times. Once the video passes, it is uploaded to Google Drive, and the pipeline pauses again, awaiting human approval of the final video (Ready stage).
 
-After the user approves the video, it is marked for posting. Throughout the entire process, the Google Sheet is continuously updated to reflect the current status, and Telegram is used exclusively for alerts and notifications. Any failures are logged in the Sheet and immediately reported via Telegram.
+After the user approves the video, it is marked for posting. Once posted, performance metrics are tracked until the item is archived. Throughout the entire process, the Google Sheet is continuously updated to reflect the current status, and Telegram is used exclusively for alerts and notifications. Any failures are logged in the Sheet and immediately reported via Telegram.
 
 ### Human Approval Gates
 
@@ -111,9 +123,57 @@ After the user approves the video, it is marked for posting. Throughout the enti
 
 | Stage | Fields Auto-Updated |
 | --- | --- |
-| Intake | Story ID, Generation Batch ID, Briefing Date, Headline, Source, Source URL, Category, Pipeline Stage = Intake |
+| Intake | Story ID, Generation Batch ID, Date Added, Topic / Headline, Briefing Link, Pipeline Stage = Intake |
 | Selection | Viral Potential, Emotional Impact, Audience Relevance, Total Score, Rank, Selection Reason, Selection Approved = Pending, Pipeline Stage = Selected, Action Required = Approve Top 3 |
 | Script | Script Status, Script Link, Hook Strength, Clarity, Flow, TTS Pass, Script Approved, Pipeline Stage = Script |
 | Production | Voiceover Status, Visuals Status, Assembly Status, Video Quality Score, Sync Pass, Visual Consistency, Final Video Link, Pipeline Stage = Production |
-| Ready | Video Approved = No, Action Required = Approve Video, Pipeline Stage = Ready |
+| Ready | Action Required = Approve Video, Pipeline Stage = Ready |
 | Posted | Posted Status, Post Date, Action Required = None, Pipeline Stage = Posted |
+
+---
+
+## SHEET SCHEMA ALIGNMENT
+
+This section serves as the definitive mapping between the live Google Sheet (Pipeline tab) and the operational workflow.
+
+| Col | Column Name | Valid Values / Format | Populated During Stage |
+| --- | --- | --- | --- |
+| 1 | Story ID | String (Unique ID) | Intake |
+| 2 | Generation Batch ID | String (Unique ID) | Intake |
+| 3 | Date Added | Date (YYYY-MM-DD) | Intake |
+| 4 | Pipeline Stage | Intake, Selected, Script, Production, Ready, Posted, Archived | All Stages |
+| 5 | Action Required | None, Approve Top 3, Review Script, Approve Video, Post | All Stages |
+| 6 | Topic / Headline | String | Intake |
+| 7 | Briefing Link | URL | Intake |
+| 8 | Viral Potential | 1, 2, 3, 4, 5 | Selection |
+| 9 | Emotional Impact | 1, 2, 3, 4, 5 | Selection |
+| 10 | Audience Relevance | 1, 2, 3, 4, 5 | Selection |
+| 11 | Total Score | Number (Sum of cols 8-10) | Selection |
+| 12 | Rank | Top 1, Top 2, Top 3, Backup, Reject | Selection |
+| 13 | Selection Reason | String (Free text) | Selection |
+| 14 | Selection Approved | Pending, Approved, Rejected | Selection (Human updates) |
+| 15 | Script Status | Not Started, In Progress, Complete, Failed | Script |
+| 16 | Script Link | URL | Script |
+| 17 | Hook Strength | 1, 2, 3, 4, 5 | Script |
+| 18 | Clarity | 1, 2, 3, 4, 5 | Script |
+| 19 | Flow | 1, 2, 3, 4, 5 | Script |
+| 20 | TTS Pass | Yes, No | Script |
+| 21 | Script Approved | Yes, No | Script (or Human if failed) |
+| 22 | Voiceover Status | Not Started, In Progress, Complete, Failed | Production |
+| 23 | Visuals Status | Not Started, In Progress, Complete, Failed | Production |
+| 24 | Assembly Status | Not Started, In Progress, Complete, Failed | Production |
+| 25 | Video Quality Score | 1, 2, 3, 4, 5 | Production |
+| 26 | Sync Pass | Yes, No | Production |
+| 27 | Visual Consistency | 1, 2, 3, 4, 5 | Production |
+| 28 | Final Video Link | URL | Production |
+| 29 | Video Approved | Yes, No | Ready (Human updates) |
+| 30 | Posted Status | Not Started, In Progress, Complete, Failed | Posted |
+| 31 | Post Date | Date (YYYY-MM-DD) | Posted |
+| 32 | Failure Type | None, Script, Voice, Visual, Assembly, Unknown | Any Stage (on failure) |
+| 33 | Retry Needed | Yes, No | Any Stage (on failure) |
+| 34 | Notes | String (Free text) | Any Stage |
+| 35 | Views | Number | Post-Publishing |
+| 36 | Likes | Number | Post-Publishing |
+| 37 | Comments | Number | Post-Publishing |
+| 38 | Watch Time % | Percentage | Post-Publishing |
+| 39 | Performance Score | 1, 2, 3, 4, 5 | Post-Publishing |
