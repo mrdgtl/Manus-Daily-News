@@ -84,6 +84,21 @@ Self-evaluate the script on the following criteria:
 
 If all scripts pass, set Script Approved = Yes, Pipeline Stage = Script, Action Required = None, and proceed automatically to production. Upload working scripts and TTS scripts to the Google Drive Scripts folder with the proper naming convention.
 
+### Script Storage Rule (Mandatory)
+
+Script generation is NOT complete until:
+1. Both working script and TTS script are uploaded to Google Drive under `Scripts/YYYY/MM-Month/`
+2. Script Link is populated in the Google Sheet Pipeline tab
+3. Script Status is updated to Complete
+
+If file upload to Drive fails:
+- Script Status = Failed
+- Failure Type = Script
+- Retry Needed = Yes
+- Add descriptive Notes explaining the failure
+
+Chat delivery is optional. Drive storage and Sheet linking are mandatory. Do not silently fall back to chat-only delivery.
+
 ## 4. PRODUCTION GATE
 
 Only proceed if Script Approved = Yes. Generate voiceover via ElevenLabs API (voice: MQ-4-news, voice ID: h5auDwZge17EdlHgtS16). Update Voiceover Status as it progresses (Not Started → In Progress → Complete/Failed). Generate visual assets (keyframes via Nano Banana Pro, animation via Veo 3.1). Update Visuals Status as it progresses. Assemble the final video via FFmpeg. Update Assembly Status.
