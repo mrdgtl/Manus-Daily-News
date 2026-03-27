@@ -2,6 +2,16 @@
 
 This document defines the complete workflow rules for the AI Daily Source pipeline. The Google Sheet dashboard serves as the source of truth and main control system for this operational workflow.
 
+## Prompt File Authority
+
+The following workflow stages are governed by versioned prompt files stored in /prompts/track2-production/. These files are the canonical source of instructions. If any section of this document conflicts with the prompt files, the prompt files take precedence.
+
+| Stage | Prompt File | Version |
+|---|---|---|
+| Selection Gate | /prompts/track2-production/selection-engine.md | v1.0 |
+| Script Generation | /prompts/track2-production/script-generator.md | v1.0 |
+| Script Quality Evaluation | /prompts/track2-production/script-evaluator.md | v1.0 |
+
 ## 1. SHEET-FIRST OPERATION
 
 Every story must be added to the Google Sheet (ID: `1Nc_O0Ina5gnz2X7hV0E1ia_NN1eArW3bTP1pcF2bbO4`, Pipeline tab) immediately after briefing generation. All intake and selection fields must be populated before moving forward. The Google Sheet is now the main operational control system. Telegram is only for alerts and delivery notifications (e.g., "Briefing complete — 8 stories loaded to Sheet. Awaiting Top 3 approval.").
