@@ -17,6 +17,30 @@ Set the following fields:
 
 **STOP** — Wait for human approval before script generation. Notify the user on Telegram: "Selection complete. Top 3 stories scored and ranked in the Sheet. Please review and approve."
 
+## 2A. SCORING RULES
+
+The following rules govern how stories are scored during the Selection stage. These rules are mandatory and must be applied consistently on every batch.
+
+**Rule 1 — Use the full 1–5 range intentionally.** Do NOT cluster scores at 3–4. Be aggressive. A mediocre story gets a 1 or 2, not a 3. Reserve 4 for stories with genuine above-average performance on that dimension, and 5 for stories that are exceptional and rare.
+
+**Rule 2 — At least one story must score 5 in Viral Potential or Emotional Impact.** The Top 1 story in any batch must earn a 5 in at least one of these two dimensions. If no story in the pool genuinely deserves a 5, do not inflate the score — instead, flag the batch by adding the following warning to the Notes column for the Top 1 story: *"Low-quality news cycle — weak viral potential."*
+
+**Rule 3 — Reject any story with no score of 4 or higher.** If a story does not have at least one score of 4+ across Viral Potential, Emotional Impact, and Audience Relevance, it must be assigned Rank = Reject. No exceptions.
+
+**Rule 4 — Ranking strictly follows Total Score.** Top 1 = highest total, Top 2 = second highest, Top 3 = third highest. In the event of a tie on Total Score, the tie is broken first by Viral Potential (higher wins), then by Emotional Impact (higher wins). If still tied after both tie-breakers, the story with the higher Audience Relevance wins.
+
+**Rule 5 — Selection Reason must be score-referenced.** Every Selection Reason must explicitly cite the scores (e.g., "Scores 14/15, V:5, E:5, R:4") and must justify why this story beats or loses to competing stories by referencing specific score differences or tie-break outcomes.
+
+**Rule 6 — Weak pool warning.** If all stories in a batch score below 10 Total Score, add the following warning to the Notes column for every row in the batch: *"Low-quality news cycle — weak viral potential."*
+
+### Scoring Dimension Definitions
+
+| Dimension | What It Measures | Score 1–2 | Score 3 | Score 4 | Score 5 |
+| --- | --- | --- | --- | --- | --- |
+| Viral Potential | How likely is this to get shares, comments, and reactions on TikTok/Instagram? Consider controversy, surprise factor, and relatability. | Niche or dry — general audience scrolls past | Mildly interesting, some shares expected | Strong hook, likely to trend in AI circles | Perfect stop-scroll moment, mass sharing expected |
+| Emotional Impact | Does this story provoke strong emotions — fear, excitement, outrage, wonder, or vindication? | Flat — no emotional resonance | Mild interest or curiosity | Strong single emotion (e.g., outrage or excitement) | Multi-layered emotional response — triggers outrage, fear, and vindication simultaneously |
+| Audience Relevance | How relevant is this to people who follow AI news channels? Consider broad appeal vs. niche. | Irrelevant or too niche even for AI followers | Relevant to a sub-segment of the AI audience | Relevant to most AI followers | Directly affects every AI follower and has mainstream crossover appeal |
+
 ## 3. SCRIPT GATE
 
 **CRITICAL RULE: Script generation ONLY starts when Selection Approved = Approved AND Rank is Top 1, Top 2, or Top 3.**
