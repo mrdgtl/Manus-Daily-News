@@ -1,5 +1,13 @@
 # Prompt System Changelog
 
+## v1.2 — 2026-03-27
+
+- Added `voiceover-generator.md` (v1.0) to enforce ElevenLabs MQ-4-news voice and strict fallback approval rules
+- Added `visual-generator.md` (v1.0) to require light motion treatment (subtle zoom, pan, crossfade) via FFmpeg
+- Added `production-evaluator.md` (v1.0) to enforce strict quality control on voice fidelity, visual motion, and sync
+- Updated `OPERATIONAL-WORKFLOW.md` to integrate new voiceover, visual motion, and production evaluation rules
+- Updated `PROMPT-INTEGRATION.md` to map the new production prompt files to their respective workflow stages
+
 ## v1.1 — 2026-03-27
 
 - Updated script-evaluator.md to v1.1

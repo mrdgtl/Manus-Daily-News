@@ -11,6 +11,9 @@ The following table maps the active prompt files to their respective workflow st
 | `selection-engine.md` | Selection Gate | After briefing intake, before script generation | Implicit scoring logic in OPERATIONAL-WORKFLOW.md |
 | `script-generator.md` | Script Generation | After Selection Approved = Approved for Top 3 | Implicit generation logic in PIPELINE-TECHNICAL-SPEC.md |
 | `script-evaluator.md` | Script Quality Evaluation | After script generation, before production | Implicit evaluation logic in OPERATIONAL-WORKFLOW.md |
+| `voiceover-generator.md` | Voiceover Generation | During production, before visual generation | Implicit voiceover logic in PIPELINE-TECHNICAL-SPEC.md |
+| `visual-generator.md` | Visual Generation | During production, after voiceover generation | Implicit visual logic in PIPELINE-TECHNICAL-SPEC.md |
+| `production-evaluator.md` | Production Quality Evaluation | After video assembly, before final approval | Implicit evaluation logic in OPERATIONAL-WORKFLOW.md |
 
 ## 2. Integration Rules
 
@@ -36,10 +39,7 @@ The following components still run on implicit instructions and are not yet cove
 
 ### Track 2
 - Story Intake (loading to Sheet): Implicit — no prompt file yet
-- Voiceover Generation: Implicit — no prompt file yet
-- Visual Asset Generation: Implicit — no prompt file yet
-- Video Assembly: Implicit — no prompt file yet
-- Production Quality Evaluation: Implicit — no prompt file yet
+- Video Assembly: Implicit — no prompt file yet (partially covered by visual-generator.md)
 - Google Drive Upload: Implicit — no prompt file yet
 - Google Sheet Updates: Implicit — no prompt file yet
 

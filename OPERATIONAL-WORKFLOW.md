@@ -11,6 +11,9 @@ The following workflow stages are governed by versioned prompt files stored in /
 | Selection Gate | /prompts/track2-production/selection-engine.md | v1.0 |
 | Script Generation | /prompts/track2-production/script-generator.md | v1.0 |
 | Script Quality Evaluation | /prompts/track2-production/script-evaluator.md | v1.0 |
+| Voiceover Generation | /prompts/track2-production/voiceover-generator.md | v1.0 |
+| Visual Generation | /prompts/track2-production/visual-generator.md | v1.0 |
+| Production Quality Evaluation | /prompts/track2-production/production-evaluator.md | v1.0 |
 
 ## 1. SHEET-FIRST OPERATION
 
@@ -101,14 +104,43 @@ Chat delivery is optional. Drive storage and Sheet linking are mandatory. Do not
 
 ## 4. PRODUCTION GATE
 
-Only proceed if Script Approved = Yes. Generate voiceover via ElevenLabs API (voice: MQ-4-news, voice ID: h5auDwZge17EdlHgtS16). Update Voiceover Status as it progresses (Not Started → In Progress → Complete/Failed). Generate visual assets (keyframes via Nano Banana Pro, animation via Veo 3.1). Update Visuals Status as it progresses. Assemble the final video via FFmpeg. Update Assembly Status.
+Only proceed if Script Approved = Yes. Generate voiceover via ElevenLabs API. Update Voiceover Status as it progresses (Not Started → In Progress → Complete/Failed).
+
+**Voiceover Control Rules:**
+- Branded production MUST use ElevenLabs MQ-4-news voice (voice ID: h5auDwZge17EdlHgtS16) by default.
+- If ElevenLabs is unavailable, do NOT silently fall back to another voice.
+- Instead:
+  - Log the issue clearly.
+  - Set a warning in the Notes column of the Sheet.
+  - Set Action Required = Approve Fallback Voice.
+  - Require explicit user approval before using any fallback voice.
+- A fallback voice may ONLY be used in test mode, not for final brand-standard production.
+- If no approval is given, mark Voiceover Status = Failed, Failure Type = Voiceover, Retry Needed = Yes.
+
+Generate visual assets (keyframes via Nano Banana Pro, animation via Veo 3.1). Update Visuals Status as it progresses.
+
+**Visual Motion Rules:**
+- Visuals must NOT be static. Apply light motion treatment to every keyframe segment.
+- Use subtle zoom in or zoom out on each keyframe segment.
+- Apply gentle pan where appropriate.
+- Ensure smooth transitions between segments (crossfade or similar).
+- Motion should feel polished, not exaggerated.
+- Text must remain readable and visuals must stay clean.
+- Goal: make each slide feel alive while preserving clarity and professionalism.
+
+Assemble the final video via FFmpeg. Update Assembly Status.
+
+**Video Assembly Instructions:**
+- Motion effects (Ken Burns effect) MUST be applied via FFmpeg using the `zoompan` filter.
+- Example approach: Use `zoompan=z='min(zoom+0.0015,1.5)':d=125` for subtle zoom, and `xfade` for crossfade transitions.
 
 After assembly, self-evaluate the video on the following criteria:
+- Voice Fidelity (Pass/Fail)
 - Video Quality Score (1-5)
 - Sync Pass (Yes/No)
 - Visual Consistency (1-5)
 
-**Quality threshold:** If Video Quality Score < 4 OR Sync Pass = No OR Visual Consistency < 4, identify the failing component, fix upstream, and retry (up to 2 attempts).
+**Quality threshold:** Video passes QC only if Voice Fidelity = Pass (or explicitly approved fallback), Video Quality >= 4, Sync Pass = Yes, and Visual Consistency >= 4. If any condition fails, identify the failing component, fix upstream, and retry (up to 2 attempts).
 
 Upload all assets to proper Google Drive folders with naming conventions:
 - Voiceovers to `Voiceovers/YYYY/MM-Month/`
