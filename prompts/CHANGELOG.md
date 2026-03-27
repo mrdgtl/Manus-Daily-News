@@ -1,5 +1,11 @@
 # Prompt System Changelog
 
+## v1.1 — 2026-03-27
+
+- Updated script-evaluator.md to v1.1
+- Added stricter evaluation skepticism criteria (penalizing generic hooks, overstatement, legal exaggeration, stiff phrasing, and ungrounded significance claims)
+- Clarified that a Hook score of 5 requires both factual discipline and exceptional stop-scroll power
+
 ## v1.0.1 — 2026-03-27
 
 - Integrated prompt files into live workflow as canonical instruction sources
