@@ -12,8 +12,8 @@ The following workflow stages are governed by versioned prompt files stored in /
 | Script Generation | /prompts/track2-production/script-generator.md | v1.0 |
 | Script Quality Evaluation | /prompts/track2-production/script-evaluator.md | v1.0 |
 | Voiceover Generation | /prompts/track2-production/voiceover-generator.md | v1.0 |
-| Visual Generation | /prompts/track2-production/visual-generator.md | v1.0 |
-| Production Quality Evaluation | /prompts/track2-production/production-evaluator.md | v1.0 |
+| Visual Generation | /prompts/track2-production/visual-generator.md | v1.1 |
+| Production Quality Evaluation | /prompts/track2-production/production-evaluator.md | v1.1 |
 
 ## 1. SHEET-FIRST OPERATION
 
@@ -119,20 +119,32 @@ Only proceed if Script Approved = Yes. Generate voiceover via ElevenLabs API. Up
 
 Generate visual assets (keyframes via Nano Banana Pro, animation via Veo 3.1). Update Visuals Status as it progresses.
 
-**Visual Motion Rules:**
-- Visuals must NOT be static. Apply light motion treatment to every keyframe segment.
-- Use subtle zoom in or zoom out on each keyframe segment.
-- Apply gentle pan where appropriate.
-- Ensure smooth transitions between segments (crossfade or similar).
-- Motion should feel polished, not exaggerated.
-- Text must remain readable and visuals must stay clean.
-- Goal: make each slide feel alive while preserving clarity and professionalism.
+**Orientation Validation (Hard Requirement):**
+- All visual assets MUST be 9:16 vertical (1080x1920). This is validated before assembly.
+- If any asset is not vertical, mark it as failed immediately. Do NOT rotate or force-fit horizontal assets.
+- Set `Visuals Status = Failed`, `Failure Type = Visual`, `Retry Needed = Yes` for any non-vertical asset.
+
+**Visual Motion Rules (v1.1 — Revised):**
+- Motion must be intentional, subtle, and controlled. Each motion choice must serve the story.
+- Apply exactly ONE motion effect per segment (never stack multiple effects).
+- All motion must use ease-in/ease-out curves — linear motion is prohibited.
+- Constant, random, or uniform motion across all slides is prohibited.
+- Recommended motion mapping: Hook = slow zoom in, Context = subtle pan, Significance = slow zoom out, CTA = fade in.
+- Text must remain readable and visuals must stay clean throughout motion.
+- See `visual-generator.md` v1.1 for full standardized motion system and FFmpeg easing expressions.
 
 Assemble the final video via FFmpeg. Update Assembly Status.
 
 **Video Assembly Instructions:**
-- Motion effects (Ken Burns effect) MUST be applied via FFmpeg using the `zoompan` filter.
-- Example approach: Use `zoompan=z='min(zoom+0.0015,1.5)':d=125` for subtle zoom, and `xfade` for crossfade transitions.
+- Motion effects MUST be applied via FFmpeg using the `zoompan` filter with easing expressions (sinusoidal/cosine curves). Linear zoom expressions are prohibited.
+- Use `xfade` for crossfade transitions between segments.
+- See `visual-generator.md` v1.1 for approved easing expressions and filter chains.
+
+**Branded End Card (Mandatory):**
+- Every video MUST conclude with a branded end card. A video without an end card is incomplete.
+- End card specifications: 3 seconds, 1080x1920, dark background (#0D0D0D), centered `[LOGO]` placeholder (white text), tagline "Daily AI news, simplified." below logo, clean minimal design.
+- The end card is generated as a static image (1080x1920 PNG), converted to a 3-second video clip, and appended after the final content segment with a 1-second fade-in transition.
+- See `visual-generator.md` v1.1 for FFmpeg end card assembly commands.
 
 After assembly, self-evaluate the video on the following criteria:
 - Voice Fidelity (Pass/Fail)
