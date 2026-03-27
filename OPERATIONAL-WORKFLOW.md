@@ -41,6 +41,22 @@ The following rules govern how stories are scored during the Selection stage. Th
 | Emotional Impact | Does this story provoke strong emotions — fear, excitement, outrage, wonder, or vindication? | Flat — no emotional resonance | Mild interest or curiosity | Strong single emotion (e.g., outrage or excitement) | Multi-layered emotional response — triggers outrage, fear, and vindication simultaneously |
 | Audience Relevance | How relevant is this to people who follow AI news channels? Consider broad appeal vs. niche. | Irrelevant or too niche even for AI followers | Relevant to a sub-segment of the AI audience | Relevant to most AI followers | Directly affects every AI follower and has mainstream crossover appeal |
 
+### Content Type Definitions
+
+Every story must be assigned a Content Type before ranking. The Content Type reflects the primary nature of the story and is used to enforce diversity in the Top 3 selection.
+
+| Content Type | Label | Definition |
+| --- | --- | --- |
+| Viral | Viral / Outrage | High emotional impact. Legal verdicts, controversy, conflict-driven stories, or events that provoke outrage, fear, or strong public reactions. |
+| Shock | Shock / Industry Shift | Major unexpected move by a leading company. Product shutdowns, surprise launches, strategic pivots, or reversals that redefine the competitive landscape. |
+| Insight | Insight / Curiosity | Interesting, surprising, or highly relevant developments. Partnerships, technical shifts, emerging trends, or stories that inform and intrigue without necessarily provoking outrage. |
+
+**Rule 7 — Top 3 must represent three different Content Types.** The final Top 3 selection must include exactly one Viral story, one Shock story, and one Insight story. This ensures every batch delivers a balanced content mix for the audience.
+
+**Rule 8 — Content Type diversity overrides raw score in Top 3 composition.** When two stories of the same Content Type compete for a Top 3 slot, the lower-scoring story is demoted to Backup regardless of its absolute score, and the highest-scoring story of the missing Content Type is promoted to fill the slot. Raw score tie-breaking (Viral Potential first, then Emotional Impact) applies only within the same Content Type when selecting the representative for that type.
+
+**Rule 9 — Selection Reason must include Content Type justification.** Every Selection Reason must state the story's Content Type, explain why it is the best representative of that type in the batch, and describe how it complements the other two Top 3 stories to complete the required Viral + Shock + Insight mix.
+
 ## 3. SCRIPT GATE
 
 **CRITICAL RULE: Script generation ONLY starts when Selection Approved = Approved AND Rank is Top 1, Top 2, or Top 3.**
