@@ -5,3 +5,6 @@
 - Initial prompt architecture created
 - Added core structure for Track 2 production prompts
 - Prepared system for prompt version control
+- Added selection engine prompt v1.0
+- Added script generator prompt v1.0
+- Added script evaluator prompt v1.0
