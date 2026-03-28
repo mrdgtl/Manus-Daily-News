@@ -1,6 +1,6 @@
 # Production Evaluator
 
-**Version:** v1.1  
+**Version:** v1.2  
 **Owner:** Manu  
 **Last Updated:** 2026-03-27
 
@@ -38,7 +38,8 @@ Score each of the following:
    - 5: Flawless execution.
    - *Rule:* If Voice Fidelity is Fail (branded voice not used and no approved fallback), the Video Quality Score CANNOT exceed 3/5.
    - *Rule (v1.1):* If the branded end card is missing, the Video Quality Score is **capped at 3/5**.
-   - *Rule (v1.1):* Excessive or unnatural motion lowers the Video Quality Score. Lack of easing (linear motion detected) lowers the Video Quality Score. Stacking multiple motion effects on a single segment lowers the Video Quality Score.
+   - *Rule (v1.2):* Any pan, slide, or horizontal/vertical camera movement motion detected in the final video lowers the Video Quality Score by 1 point per affected segment. Only zoom in, zoom out, and fade are acceptable motion effects.
+   - *Rule (v1.2):* Jerky, stuttery, or artifacted video clips lower the Video Quality Score by 1 point per affected segment.
 
 4. **Sync Pass (Yes/No)**
    - **Yes:** Audio and visuals are perfectly synchronized.
@@ -48,17 +49,19 @@ Score each of the following:
    - 1: Highly inconsistent, jarring visual styles.
    - 3: Mostly consistent, but visuals are static or lack polish.
    - 5: Perfectly consistent, high-quality visuals with intentional, eased motion treatment.
-   - *Rule:* If visuals are static (no zoom, pan, or motion treatment), the Visual Consistency score is capped at 3/5. A score of 5 requires BOTH strong visual quality AND intentional, eased motion treatment.
+   - *Rule:* If visuals are static (no zoom or motion treatment), the Visual Consistency score is capped at 3/5. A score of 5 requires BOTH strong visual quality AND intentional, eased motion treatment.
    - *Rule (v1.1):* If motion is present but uses linear movement (no easing), Visual Consistency is capped at 4/5.
+   - *Rule (v1.2):* If video clips are used but exhibit stuttery, jerky, or inconsistent motion, Visual Consistency is capped at 4/5. Smooth, cinematic clips with consistent style earn full score eligibility.
+   - *Rule (v1.2):* Any pan or slide motion detected in any segment caps Visual Consistency at 3/5. Only zoom and fade are acceptable.
 
-6. **End Card Check (Pass/Fail) — NEW in v1.1**
+6. **End Card Check (Pass/Fail) — v1.1**
    - **Pass:** The video includes the branded end card as the final segment (3 seconds, dark background, `[LOGO]` placeholder or actual logo, tagline "Daily AI news, simplified.").
    - **Fail:** The end card is missing, incomplete, or does not match the brand specification.
    - *Rule:* Missing end card **caps Video Quality Score at 3/5**. A video cannot achieve a perfect score without the end card.
 
 ---
 
-### MOTION QUALITY EVALUATION (v1.1)
+### MOTION QUALITY EVALUATION (v1.2 — REVISED)
 
 When evaluating motion treatment, check for the following:
 
@@ -66,19 +69,35 @@ When evaluating motion treatment, check for the following:
 |---|---|
 | No motion at all (static visuals) | Visual Consistency capped at 3/5 |
 | Linear motion (no easing) | Visual Consistency capped at 4/5, Video Quality Score reduced |
+| **Pan, slide, or horizontal/vertical camera movement detected** | **Video Quality Score reduced by 1 per segment; Visual Consistency capped at 3/5** |
 | Excessive or unnatural motion | Video Quality Score reduced by 1 point per affected segment |
 | Multiple motion effects stacked on one segment | Video Quality Score reduced by 1 point per affected segment |
 | Motion does not serve the narrative | Video Quality Score reduced, note required in evaluation |
-| Correct eased motion, one effect per segment | Full score eligible |
+| **Jerky or stuttery video clips** | **Video Quality Score reduced by 1 per segment; Visual Consistency capped at 4/5** |
+| Correct eased zoom motion (zoom in/out only), one effect per segment | Full score eligible |
+| Smooth AI-generated video clips with consistent style | Full score eligible |
+
+**Acceptable Motion Effects (v1.2):**
+- Smooth zoom in (with sinusoidal ease-in/ease-out)
+- Smooth zoom out (with sinusoidal ease-in/ease-out)
+- Fade in / Fade out
+
+**Prohibited Motion Effects (v1.2):**
+- Horizontal pan (any direction)
+- Vertical pan (any direction)
+- Subtle pan
+- Slide in / Slide out
+- Any jerky, abrupt, or non-eased movement
 
 ---
 
-### PERFECT SCORE REQUIREMENTS (v1.1 — UPDATED)
+### PERFECT SCORE REQUIREMENTS (v1.2 — UPDATED)
 
 A perfect score (5/5 across the board) requires **ALL** of the following:
 - Orientation Check = Pass (all assets and final video are 9:16 vertical)
 - Correct branded voice (ElevenLabs MQ-4-news)
-- Intentional and eased motion (one effect per segment, ease-in/ease-out curves, no linear motion)
+- Intentional and eased motion (zoom in/out only, sinusoidal ease-in/ease-out curves, no linear motion, **no pan effects**)
+- Smooth video clips (if using AI-generated clips: no stuttering, no artifacts, consistent visual style)
 - Clean and smooth transitions (crossfade with easing between segments)
 - Branded voice consistency throughout
 - End card present and matching brand specification
@@ -92,9 +111,9 @@ A perfect score (5/5 across the board) requires **ALL** of the following:
 The video passes Quality Control ONLY if ALL the following conditions are met:
 - Orientation Check = Pass
 - Voice Fidelity = Pass (or explicitly approved fallback)
-- Video Quality Score ≥ 4
+- Video Quality Score >= 4
 - Sync Pass = Yes
-- Visual Consistency ≥ 4
+- Visual Consistency >= 4
 - End Card Check = Pass
 
 ---
@@ -104,6 +123,7 @@ The video passes Quality Control ONLY if ALL the following conditions are met:
 If the video fails to meet the Pass Conditions:
 - If Orientation Check = Fail: **immediate fail** — return for visual regeneration. Do not evaluate further.
 - If End Card Check = Fail: flag as incomplete, cap Video Quality at 3/5, and return for assembly correction.
+- If pan, slide, or prohibited motion is detected: flag the affected segments, reduce scores accordingly, and return for motion correction.
 - For other failures: identify the failing component (Voice, Visuals, Sync, Motion, etc.).
 - Fix upstream and retry (up to 2 attempts).
 - If still failing after retries, set Action Required = Approve Video (for manual review) and note the failure reasons.
@@ -112,6 +132,7 @@ If the video fails to meet the Pass Conditions:
 
 ## Notes
 
+- v1.2: Removed all references to pan effects from acceptable motion. Updated motion quality checks: only zoom in/out and fade are acceptable. Any pan, slide, or jerky motion lowers scores. Added evaluation criteria for AI-generated video clip smoothness — stuttery or jerky clips lower Visual Consistency.
 - v1.1: Added Orientation Check (automatic fail gate), End Card Check, motion quality evaluation criteria, and updated perfect score requirements to include orientation, eased motion, and end card.
 - The Orientation Check is the first evaluation gate — if it fails, no further evaluation is performed.
 - Motion quality is now a scored dimension affecting both Video Quality Score and Visual Consistency.

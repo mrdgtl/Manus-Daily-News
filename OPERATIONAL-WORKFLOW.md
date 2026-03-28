@@ -12,8 +12,8 @@ The following workflow stages are governed by versioned prompt files stored in /
 | Script Generation | /prompts/track2-production/script-generator.md | v1.0 |
 | Script Quality Evaluation | /prompts/track2-production/script-evaluator.md | v1.0 |
 | Voiceover Generation | /prompts/track2-production/voiceover-generator.md | v1.0 |
-| Visual Generation | /prompts/track2-production/visual-generator.md | v1.1 |
-| Production Quality Evaluation | /prompts/track2-production/production-evaluator.md | v1.1 |
+| Visual Generation | /prompts/track2-production/visual-generator.md | v1.2 |
+| Production Quality Evaluation | /prompts/track2-production/production-evaluator.md | v1.2 |
 
 ## 1. SHEET-FIRST OPERATION
 
@@ -117,28 +117,31 @@ Only proceed if Script Approved = Yes. Generate voiceover via ElevenLabs API. Up
 - A fallback voice may ONLY be used in test mode, not for final brand-standard production.
 - If no approval is given, mark Voiceover Status = Failed, Failure Type = Voiceover, Retry Needed = Yes.
 
-Generate visual assets (keyframes via Nano Banana Pro, animation via Veo 3.1). Update Visuals Status as it progresses.
+Generate visual assets. The primary mode (v1.2) is **AI-generated video clips** (3–8 seconds each, one per script segment: Hook, Context, Significance, CTA). If video generation is unavailable, fall back to static images with FFmpeg zoom — but log the fallback clearly. Update Visuals Status as it progresses.
 
 **Orientation Validation (Hard Requirement):**
 - All visual assets MUST be 9:16 vertical (1080x1920). This is validated before assembly.
 - If any asset is not vertical, mark it as failed immediately. Do NOT rotate or force-fit horizontal assets.
 - Set `Visuals Status = Failed`, `Failure Type = Visual`, `Retry Needed = Yes` for any non-vertical asset.
 
-**Visual Motion Rules (v1.1 — Revised):**
+**Visual Motion Rules (v1.2 — Revised):**
 - Motion must be intentional, subtle, and controlled. Each motion choice must serve the story.
 - Apply exactly ONE motion effect per segment (never stack multiple effects).
-- All motion must use ease-in/ease-out curves — linear motion is prohibited.
+- All motion must use sinusoidal ease-in/ease-out curves — linear motion is prohibited.
+- **Only zoom in, zoom out, and fade are allowed motion effects. All pan effects (horizontal pan, vertical pan, subtle pan, slide in/out) are prohibited as of v1.2.**
 - Constant, random, or uniform motion across all slides is prohibited.
-- Recommended motion mapping: Hook = slow zoom in, Context = subtle pan, Significance = slow zoom out, CTA = fade in.
+- Recommended motion mapping: Hook = slow zoom in, Context = slow zoom out, Significance = slow zoom in, CTA = fade in.
+- For AI-generated video clips, zoom can be baked into the generation prompt or applied via FFmpeg post-processing.
 - Text must remain readable and visuals must stay clean throughout motion.
-- See `visual-generator.md` v1.1 for full standardized motion system and FFmpeg easing expressions.
+- See `visual-generator.md` v1.2 for full standardized motion system and FFmpeg easing expressions.
 
 Assemble the final video via FFmpeg. Update Assembly Status.
 
-**Video Assembly Instructions:**
-- Motion effects MUST be applied via FFmpeg using the `zoompan` filter with easing expressions (sinusoidal/cosine curves). Linear zoom expressions are prohibited.
-- Use `xfade` for crossfade transitions between segments.
-- See `visual-generator.md` v1.1 for approved easing expressions and filter chains.
+**Video Assembly Instructions (v1.2 — Updated):**
+- **Primary mode (video clips):** Concatenate AI-generated video clips with smooth crossfade transitions (xfade). Apply zoom post-processing via FFmpeg if zoom was not baked into the clip generation. Add voiceover audio track. Append branded end card.
+- **Fallback mode (static images):** Apply eased zoom via FFmpeg `zoompan` filter with sinusoidal easing expressions. NO PAN EFFECTS. Use `xfade` for crossfade transitions between segments. Add voiceover audio track. Append branded end card.
+- Linear zoom expressions are prohibited. Pan expressions are prohibited.
+- See `visual-generator.md` v1.2 for approved easing expressions, assembly pipeline, and filter chains.
 
 **Branded End Card (Mandatory):**
 - Every video MUST conclude with a branded end card. A video without an end card is incomplete.

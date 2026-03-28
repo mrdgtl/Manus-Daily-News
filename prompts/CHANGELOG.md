@@ -1,5 +1,29 @@
 # Prompt System Changelog
 
+## v1.4 — 2026-03-27
+
+**v4 Production Upgrade — Video Clips and Pan Removal (8 changes)**
+
+- Updated `visual-generator.md` to v1.2:
+  - Switched primary visual mode from static images to AI-generated video clips (3–8 seconds per segment: Hook, Context, Significance, CTA)
+  - Added fallback mode: static images with FFmpeg zoom when video generation is unavailable, with mandatory logging
+  - Removed all pan effects entirely — horizontal pan, vertical pan, subtle pan, slide in/out are no longer allowed motion effects
+  - Standardized on smooth zoom in/zoom out only (with sinusoidal ease-in/ease-out); fade in/out retained for CTA/end card
+  - Updated motion mapping: Hook = zoom in, Context = zoom out, Significance = zoom in, CTA = fade in (Context changed from pan to zoom out)
+  - Added video clip assembly pipeline (concatenation with crossfade, voiceover overlay, end card append)
+  - Kept branded end card requirement (3 seconds, [LOGO], tagline)
+- Updated `production-evaluator.md` to v1.2:
+  - Removed all references to pan effects from acceptable motion
+  - Updated motion quality checks: only zoom in/out and fade are acceptable; any pan, slide, or jerky motion lowers scores
+  - Added evaluation criteria for AI-generated video clip smoothness — stuttery or jerky clips lower Visual Consistency (capped at 4/5)
+  - Pan or slide motion detected in any segment now caps Visual Consistency at 3/5
+  - Updated perfect score requirements to explicitly prohibit pan effects and require smooth video clips
+- Updated `OPERATIONAL-WORKFLOW.md`:
+  - Updated Prompt File Authority table to reflect v1.2 for visual-generator and production-evaluator
+  - Replaced static image generation with AI-generated video clips as primary visual mode
+  - Updated visual motion rules to prohibit all pan effects, standardize on zoom only
+  - Updated video assembly instructions for both primary (video clips) and fallback (static images with zoom) modes
+
 ## v1.3 — 2026-03-27
 
 **v2 Production Review — Visual and Motion Upgrades (7 changes)**
