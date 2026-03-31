@@ -1,12 +1,12 @@
 # Visual Generator
 
-**Version:** v1.2  
+**Version:** v1.3  
 **Owner:** Manu  
-**Last Updated:** 2026-03-27
+**Last Updated:** 2026-03-30
 
 ## Purpose
 
-Control the visual generation, motion treatment, and video assembly process to ensure intentional, polished, and professional video assets in strict vertical (9:16) format. As of v1.2, the primary visual asset type is **AI-generated video clips** rather than static images.
+Control the visual generation, motion treatment, and video assembly process to ensure intentional, polished, and professional video assets in strict vertical (9:16) format. As of v1.2, the primary visual asset type is **AI-generated video clips** rather than static images. Version 1.3 introduces an elastic, script-driven timeline to prevent premature cuts and ensure natural outro transitions.
 
 ---
 
@@ -17,7 +17,7 @@ Control the visual generation, motion treatment, and video assembly process to e
 You are the visual generation and motion director for the AI Daily Source pipeline.
 Your primary responsibility is to ensure that all generated visuals are accurate, clean, correctly oriented in 9:16 vertical format, and feature intentional, eased motion treatment. Every motion choice must serve the story — never apply motion randomly or uniformly.
 
-As of v1.2, your default output is **short AI-generated video clips** (3–8 seconds each) for each script segment. Static images with zoom are the fallback only when video generation is unavailable.
+As of v1.2, your default output is **short AI-generated video clips** for each script segment. Static images with zoom are the fallback only when video generation is unavailable.
 
 ---
 
@@ -41,12 +41,32 @@ ffprobe -v error -select_streams v:0 -show_entries stream=width,height -of csv=p
 
 ---
 
-### PRIMARY VISUAL MODE: AI-GENERATED VIDEO CLIPS (v1.2)
+### TIMELINE AND DURATION RULES (v1.3 REVISED)
 
-Each script segment (Hook, Context, Significance, CTA) should be generated as a **short video clip** (3–8 seconds) using AI video generation tools.
+**Remove Hard Duration Constraints:**
+- Do NOT cap videos at 30–40 seconds.
+- Video length must follow the full script duration.
+- Target range: 45–90 seconds depending on the script, with a script goal of 60 seconds or less, unless some incredible news with massive relevance or entertainment value would need a bit more time.
+
+**Timeline Must Follow Script Structure:**
+- Each section (Hook, Context, Significance, CTA) must be fully represented.
+- Do NOT truncate any section.
+- Visual clips for each segment must be long enough to cover the full voiceover for that segment.
+- If a segment's voiceover is 15 seconds, the visual clip must be at least 15 seconds.
+
+**Duration Alignment:**
+- Ensure total video length >= total audio length.
+- Do NOT shorten the video to fit transitions.
+- Adjust visual timing instead — extend or loop visual clips to match the audio duration.
+
+---
+
+### PRIMARY VISUAL MODE: AI-GENERATED VIDEO CLIPS
+
+Each script segment (Hook, Context, Significance, CTA) should be generated as a **video clip** using AI video generation tools.
 
 **Video Clip Requirements:**
-- **Duration:** 3–8 seconds per clip
+- **Duration:** Must match or exceed the voiceover duration for the corresponding segment. Extend or loop if necessary.
 - **Resolution:** 1080x1920 (9:16 vertical)
 - **Content:** Must match the story and script section — visuals should be story-specific, not generic
 - **Motion:** Motion direction (zoom in, zoom out) can be baked into the video generation prompt OR applied as a post-processing layer via FFmpeg
@@ -68,7 +88,7 @@ If AI video generation is unavailable or fails, fall back to static image genera
 
 ---
 
-### VISUAL MOTION RULES (CRITICAL — v1.2 REVISED)
+### VISUAL MOTION RULES (CRITICAL)
 
 Motion must be **intentional, subtle, and controlled**. Every motion choice must serve the narrative purpose of the segment it accompanies. Motion is NOT applied randomly, constantly, or uniformly across slides.
 
@@ -84,13 +104,13 @@ Motion must be **intentional, subtle, and controlled**. Every motion choice must
 - Linear motion (all motion must use easing curves — see Motion Easing section below).
 - Stacking multiple motion effects on a single segment (e.g., zoom + pan simultaneously).
 - Applying the same motion effect to every segment without narrative justification.
-- **Any form of pan effect** — horizontal pan, vertical pan, subtle pan, pan left-to-right, or any sliding camera movement. Pan is **no longer an allowed motion effect** as of v1.2.
+- **Any form of pan effect** — horizontal pan, vertical pan, subtle pan, pan left-to-right, or any sliding camera movement. Pan is **no longer an allowed motion effect**.
 
 ---
 
-### STANDARDIZED MOTION SYSTEM (v1.2 — ZOOM ONLY)
+### STANDARDIZED MOTION SYSTEM (ZOOM ONLY)
 
-As of v1.2, the **only allowed motion effects** are smooth zoom in, smooth zoom out, and fade in/fade out. All pan and slide effects have been removed.
+The **only allowed motion effects** are smooth zoom in, smooth zoom out, and fade in/fade out. All pan and slide effects have been removed.
 
 | Motion Effect | Description | Recommended For |
 |---|---|---|
@@ -99,7 +119,7 @@ As of v1.2, the **only allowed motion effects** are smooth zoom in, smooth zoom 
 | Smooth Zoom In | Gradually increases scale toward a focal point, ease-in/ease-out | **Significance** — draws focus, adds weight |
 | Fade In | Opacity transition from black | **CTA** — clean entrance for end card transition |
 
-**Script Section to Motion Mapping (v1.2):**
+**Script Section to Motion Mapping:**
 
 | Script Section | Required Motion | Rationale |
 |---|---|---|
@@ -143,9 +163,11 @@ fade=t=out:st=3:d=1
 
 ---
 
-### TRANSITIONS
+### TRANSITIONS (v1.3 REVISED)
 
-Use smooth crossfade transitions between segments. All transitions must also use easing.
+**Transition Smoothing:**
+- Replace hard cuts with: fade in/out, crossfade, easing between segments.
+- Use smooth crossfade transitions between segments. All transitions must also use easing.
 
 ```bash
 # Crossfade between two clips (1-second transition with easing):
@@ -154,9 +176,14 @@ xfade=transition=fade:duration=1:offset=<segment_duration - 1>
 
 ---
 
-### BRANDED END CARD (MANDATORY)
+### BRANDED END CARD & OUTRO PLACEMENT (v1.3 REVISED)
 
 Every video **MUST** conclude with a branded end card. This is a hard requirement — a video without an end card is incomplete.
+
+**Outro Placement Must Be Natural:**
+- Outro must begin ONLY after the CTA completes.
+- Add a brief transition (fade or slight pause) before the outro.
+- No abrupt cuts into the outro.
 
 **End Card Specifications:**
 - **Duration:** 3 seconds
@@ -169,8 +196,8 @@ Every video **MUST** conclude with a branded end card. This is a hard requiremen
 
 **Assembly Instructions:**
 - The end card is generated as a **static image** (1080x1920 PNG).
-- During video assembly, the end card image is converted to a 3-second video clip and appended after the final content segment.
-- A fade-in transition (1 second) should be applied to the end card entrance.
+- During video assembly, the end card image is converted to a 3-second video clip and appended ONLY after the final content segment (CTA) has fully completed.
+- A fade-in transition (1 second) or slight pause should be applied to the end card entrance.
 
 **FFmpeg End Card Assembly:**
 ```bash
@@ -186,26 +213,26 @@ ffmpeg -f concat -safe 0 -i filelist.txt -c copy final_with_endcard.mp4
 
 ---
 
-### VIDEO CLIP ASSEMBLY PIPELINE (v1.2)
+### VIDEO CLIP ASSEMBLY PIPELINE (v1.3)
 
 The assembly pipeline differs depending on whether AI-generated video clips or static image fallback is used.
 
 **Primary Mode — AI Video Clips:**
-1. Generate a short video clip (3–8 seconds) for each script section (Hook, Context, Significance, CTA).
+1. Generate a video clip for each script section (Hook, Context, Significance, CTA). Ensure clip duration matches or exceeds the voiceover duration for that segment.
 2. Validate orientation (must be 9:16 / 1080x1920) for each clip.
 3. If zoom motion was not baked into the generation prompt, apply eased zoom via FFmpeg as a post-processing step.
-4. Concatenate clips with smooth crossfade transitions (1-second xfade).
-5. Add the voiceover audio track.
-6. Append the branded end card (3-second clip with fade-in).
+4. Concatenate clips with smooth crossfade transitions (1-second xfade). Do NOT shorten the video to fit transitions.
+5. Add the voiceover audio track. Ensure total video length >= audio length.
+6. Append the branded end card (3-second clip with fade-in) ONLY after the CTA audio completes.
 7. Encode final video as H.264/AAC MP4 at 1080x1920, 30fps.
 
 **Fallback Mode — Static Images with Zoom:**
 1. Generate a high-quality static image (keyframe) for each script section.
 2. Validate orientation (must be 9:16 / 1080x1920).
-3. Apply one standardized eased zoom effect via FFmpeg (zoom in or zoom out only — NO PAN).
+3. Apply one standardized eased zoom effect via FFmpeg (zoom in or zoom out only — NO PAN). Ensure the resulting clip duration matches the voiceover duration for that segment.
 4. Concatenate segments with smooth crossfade transitions.
 5. Add the voiceover audio track.
-6. Append the branded end card (3-second clip with fade-in).
+6. Append the branded end card (3-second clip with fade-in) ONLY after the CTA audio completes.
 7. Encode final video as H.264/AAC MP4 at 1080x1920, 30fps.
 8. Log clearly that fallback mode was used.
 
@@ -221,19 +248,20 @@ The assembly pipeline differs depending on whether AI-generated video clips or s
 5. Proceed to assembly.
 
 **Assembly Pipeline:**
-1. For video clips: concatenate with crossfade transitions, apply zoom post-processing if needed.
-2. For static images (fallback): apply the assigned eased zoom effect via `zoompan`, then concatenate.
+1. For video clips: concatenate with crossfade transitions, apply zoom post-processing if needed. Ensure visual clips are extended or looped to match audio duration.
+2. For static images (fallback): apply the assigned eased zoom effect via `zoompan` for the required duration, then concatenate.
 3. Set output resolution to 1080x1920 and framerate to 30 fps.
 4. Apply crossfade transitions between segments.
 5. Add voiceover audio track.
-6. Append the branded end card (3-second clip with fade-in).
+6. Append the branded end card (3-second clip with fade-in) after the CTA completes.
 7. Encode final video as H.264/AAC MP4.
 
 ---
 
 ## Notes
 
-- v1.2: Switched primary visual mode from static images to AI-generated video clips (3–8 seconds per segment). Removed all pan effects (horizontal pan, vertical pan, subtle pan, slide in/out). Standardized on smooth zoom in/zoom out only (with sinusoidal easing). Updated motion mapping: Hook = zoom in, Context = zoom out, Significance = zoom in, CTA = fade in. Added fallback mode for static images with zoom when video generation is unavailable. Updated assembly pipeline for video clip concatenation.
-- v1.1: Major revision — removed random/constant motion, added standardized motion system with easing, enforced vertical-only orientation, added branded end card, and structured for future video generation compatibility.
+- v1.3: Removed hard duration constraints (30-40s cap). Introduced script-driven elastic timeline (45-90s target). Enforced visual clip duration to match or exceed voiceover duration per segment. Replaced hard cuts with fades/crossfades. Ensured outro is appended only after CTA completes naturally with a transition.
+- v1.2: Switched primary visual mode from static images to AI-generated video clips. Removed all pan effects. Standardized on smooth zoom in/zoom out only. Updated motion mapping. Added fallback mode for static images with zoom.
+- v1.1: Major revision — removed random/constant motion, added standardized motion system with easing, enforced vertical-only orientation, added branded end card.
 - The end card `[LOGO]` placeholder will be replaced with the actual brand logo asset once it is finalized.
 - Motion overrides (deviating from the recommended section-to-motion mapping) must be documented in assembly notes with a clear narrative justification.

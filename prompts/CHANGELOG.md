@@ -1,5 +1,25 @@
 # Prompt System Changelog
 
+## v1.5 — 2026-03-30
+
+**v5 Timeline and Assembly Upgrade — Elastic Timeline and Outro Fixes**
+
+- Updated `visual-generator.md` to v1.3:
+  - Removed hard duration constraints (30-40s cap) and introduced a script-driven elastic timeline (45-90s target).
+  - Enforced visual clip duration to match or exceed voiceover duration per segment.
+  - Replaced hard cuts with fades/crossfades.
+  - Ensured outro is appended only after CTA completes naturally with a transition.
+- Created `track1-briefing/script-writer.md` v1.0:
+  - Introduced 45-60s target duration (max 90s for exceptional news).
+  - Added strict hook strategy focusing on value without clickbait.
+  - Required clear timing guidance for each section.
+- Updated `production-evaluator.md` to v1.3:
+  - Added Timeline & Assembly Integrity gate check (automatic fail if narration is cut off, CTA is truncated, outro interrupts abruptly, or video duration < audio duration).
+  - Lowered Video Quality Score for hard cuts between segments and abrupt outro transitions.
+- Updated `OPERATIONAL-WORKFLOW.md`:
+  - Updated Prompt File Authority table to reflect v1.3 for visual-generator and production-evaluator, and added script-writer v1.0.
+  - Updated Video Assembly Instructions to reflect the new script-driven elastic timeline and outro insertion rules.
+
 ## v1.4 — 2026-03-27
 
 **v4 Production Upgrade — Video Clips and Pan Removal (8 changes)**
