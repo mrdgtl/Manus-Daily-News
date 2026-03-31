@@ -1,5 +1,19 @@
 # Prompt System Changelog
 
+## v1.8 — 2026-03-30
+
+**v8 Production Upgrade — Final Outro Voiceover Refinement**
+
+- Updated `visual-generator.md` to v1.6:
+  - Updated standard outro voiceover line to "All sources linked below. Follow us for what matters in AI."
+- Updated `track1-briefing/script-writer.md` to v1.3:
+  - Updated standard outro voiceover line to "All sources linked below. Follow us for what matters in AI."
+- Updated `production-evaluator.md` to v1.6:
+  - Updated standard outro voiceover line reference.
+- Updated `OPERATIONAL-WORKFLOW.md`:
+  - Updated Prompt File Authority table to reflect v1.6 for visual-generator and production-evaluator, and v1.3 for script-writer.
+  - Updated Video Assembly Instructions to reflect the new standard outro voiceover line.
+
 ## v1.7 — 2026-03-30
 
 **v7 Production Upgrade — Outro Refinement and Elastic Clip Calculation**

@@ -1,6 +1,6 @@
 # Production Evaluator
 
-**Version:** v1.5  
+**Version:** v1.6  
 **Owner:** Manu  
 **Last Updated:** 2026-03-30
 
@@ -67,7 +67,7 @@ Score each of the following:
    - *Rule (v1.4):* If a single video clip is stretched or looped to cover a long audio segment instead of using multiple distinct clips per scene, Visual Consistency is capped at 3/5. Multiple distinct clips per scene (~5s each) is the expected standard.
 
 7. **End Card & Outro Check (Pass/Fail) — v1.4 REVISED**
-   - **Pass:** The video includes the branded end card as the final segment (3 seconds, dark background, `[LOGO]` placeholder or actual logo, tagline "Daily AI news, simplified.") AND the standard outro voiceover line plays over it.
+   - **Pass:** The video includes the branded end card as the final segment (3 seconds, dark background, `[LOGO]` placeholder or actual logo, tagline "Daily AI news, simplified.") AND the standard outro voiceover line ("All sources linked below. Follow us for what matters in AI.") plays over it.
    - **Fail:** The end card is missing, incomplete, does not match the brand specification, OR the standard outro voiceover line is missing/silent.
    - *Rule:* Missing the standard outro voiceover line is an **automatic fail**. The outro must have the closing voiceover playing over it, not silence. Missing end card **caps Video Quality Score at 3/5**. A video cannot achieve a perfect score without the end card and outro voiceover.
 
@@ -147,6 +147,7 @@ If the video fails to meet the Pass Conditions:
 
 ## Notes
 
+- v1.6: Updated standard outro voiceover line to "All sources linked below. Follow us for what matters in AI."
 - v1.5: Updated standard outro voiceover line to "Sources in the comments. Follow for what matters in AI."
 - v1.4: Added penalty for stretching/looping single clips instead of using multi-clip scenes (caps Visual Consistency at 3/5). Made missing standard outro voiceover line an automatic fail.
 - v1.3: Added Timeline & Assembly Integrity gate check. Automatic fail if narration is cut off, CTA is truncated, outro interrupts abruptly, or video duration < audio duration. Lowered Video Quality Score for hard cuts between segments and abrupt outro transitions.
