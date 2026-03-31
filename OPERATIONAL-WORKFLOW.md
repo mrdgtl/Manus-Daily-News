@@ -9,11 +9,11 @@ The following workflow stages are governed by versioned prompt files stored in /
 | Stage | Prompt File | Version |
 |---|---|---|
 | Selection Gate | /prompts/track2-production/selection-engine.md | v1.0 |
-| Script Generation | /prompts/track1-briefing/script-writer.md | v1.0 |
+| Script Generation | /prompts/track1-briefing/script-writer.md | v1.1 |
 | Script Quality Evaluation | /prompts/track2-production/script-evaluator.md | v1.0 |
 | Voiceover Generation | /prompts/track2-production/voiceover-generator.md | v1.0 |
-| Visual Generation | /prompts/track2-production/visual-generator.md | v1.3 |
-| Production Quality Evaluation | /prompts/track2-production/production-evaluator.md | v1.3 |
+| Visual Generation | /prompts/track2-production/visual-generator.md | v1.4 |
+| Production Quality Evaluation | /prompts/track2-production/production-evaluator.md | v1.4 |
 
 ## 1. SHEET-FIRST OPERATION
 
@@ -117,7 +117,7 @@ Only proceed if Script Approved = Yes. Generate voiceover via ElevenLabs API. Up
 - A fallback voice may ONLY be used in test mode, not for final brand-standard production.
 - If no approval is given, mark Voiceover Status = Failed, Failure Type = Voiceover, Retry Needed = Yes.
 
-Generate visual assets. The primary mode (v1.2) is **AI-generated video clips** (3–8 seconds each, one per script segment: Hook, Context, Significance, CTA). If video generation is unavailable, fall back to static images with FFmpeg zoom — but log the fallback clearly. Update Visuals Status as it progresses.
+Generate visual assets. The primary mode (v1.4) is **AI-generated video clips** (multi-clip scenes, ~5 seconds each, generating enough clips to cover the voiceover duration for each segment: Hook, Context, Significance, CTA). If video generation is unavailable, fall back to static images with FFmpeg zoom — but log the fallback clearly. Update Visuals Status as it progresses.
 
 **Orientation Validation (Hard Requirement):**
 - All visual assets MUST be 9:16 vertical (1080x1920). This is validated before assembly.
@@ -137,13 +137,13 @@ Generate visual assets. The primary mode (v1.2) is **AI-generated video clips** 
 
 Assemble the final video via FFmpeg. Update Assembly Status.
 
-**Video Assembly Instructions (v1.3 — Updated):**
+**Video Assembly Instructions (v1.4 — Updated):**
 - **Script-Driven Elastic Timeline:** Timeline is calculated from voiceover duration per segment. Total video duration = sum of all segment audio durations + transitions + outro.
-- **Primary mode (video clips):** Generate or extend visual clips to match each segment's audio duration. Concatenate AI-generated video clips with smooth crossfade transitions (xfade). Apply zoom post-processing via FFmpeg if zoom was not baked into the clip generation. Add voiceover audio track.
+- **Primary mode (video clips):** Generate multiple ~5-second visual clips to match each segment's audio duration (do NOT stretch or loop). Concatenate AI-generated video clips with smooth crossfade transitions (xfade). Apply zoom post-processing via FFmpeg if zoom was not baked into the clip generation. Add voiceover audio track.
 - **Fallback mode (static images):** Apply eased zoom via FFmpeg `zoompan` filter with sinusoidal easing expressions for the duration of the segment's audio. NO PAN EFFECTS. Use `xfade` for crossfade transitions between segments. Add voiceover audio track.
-- **Outro Insertion:** Append branded end card ONLY after CTA audio completes, with a fade/pause transition.
+- **Outro Insertion:** Append branded end card as the voiceover transitions to the standard closing line ("Find sources in the comment section..."). The outro is NOT silent.
 - Linear zoom expressions are prohibited. Pan expressions are prohibited.
-- See `visual-generator.md` v1.3 for approved easing expressions, assembly pipeline, and filter chains.
+- See `visual-generator.md` v1.4 for approved easing expressions, assembly pipeline, and filter chains.
 
 **Branded End Card (Mandatory):**
 - Every video MUST conclude with a branded end card. A video without an end card is incomplete.

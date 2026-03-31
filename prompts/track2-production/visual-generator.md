@@ -1,12 +1,12 @@
 # Visual Generator
 
-**Version:** v1.3  
+**Version:** v1.4  
 **Owner:** Manu  
 **Last Updated:** 2026-03-30
 
 ## Purpose
 
-Control the visual generation, motion treatment, and video assembly process to ensure intentional, polished, and professional video assets in strict vertical (9:16) format. As of v1.2, the primary visual asset type is **AI-generated video clips** rather than static images. Version 1.3 introduces an elastic, script-driven timeline to prevent premature cuts and ensure natural outro transitions.
+Control the visual generation, motion treatment, and video assembly process to ensure intentional, polished, and professional video assets in strict vertical (9:16) format. As of v1.2, the primary visual asset type is **AI-generated video clips** rather than static images. Version 1.3 introduces an elastic, script-driven timeline to prevent premature cuts and ensure natural outro transitions. Version 1.4 introduces multi-clip scenes (~5s clips) and standard outro voiceover integration.
 
 ---
 
@@ -61,16 +61,37 @@ ffprobe -v error -select_streams v:0 -show_entries stream=width,height -of csv=p
 
 ---
 
-### PRIMARY VISUAL MODE: AI-GENERATED VIDEO CLIPS
+### PRIMARY VISUAL MODE: MULTI-CLIP SCENES (v1.4 REVISED)
 
-Each script segment (Hook, Context, Significance, CTA) should be generated as a **video clip** using AI video generation tools.
+Replace the "one long clip per segment" approach with multiple short clips per scene. Each script segment (Hook, Context, Significance, CTA) should be generated as multiple **video clips** using AI video generation tools.
+
+**Multi-Clip Scene Rules:**
+- Each video clip should be approximately 5 seconds long.
+- A "scene" is a sentence or group of sentences conveying a single idea.
+- Each scene gets one or more 5-second clips — the number of clips is determined by the script content.
+- If a scene has 3 sentences conveying an idea, that could be 2-3 clips.
+- The total number of clips per segment depends on how many scenes/ideas are in that segment.
+- Do NOT stretch or loop clips — instead, generate enough clips to cover the audio duration.
+- Each clip should have distinct, relevant visuals that match the specific sentence/idea being spoken.
+- This makes the video feel dynamic and entertaining, like shattering news.
+
+**How to calculate clips needed:**
+- Measure the voiceover duration for each segment.
+- Divide by ~5 seconds to determine how many clips are needed.
+- Example: a 15-second Context segment needs 3 clips, each ~5 seconds.
+- Each clip gets its own visual prompt matching the specific idea being spoken at that moment.
+
+**Visual variety within a scene:**
+- Clips within the same scene should be visually related but not identical.
+- Different angles, perspectives, or aspects of the same idea.
+- Goal: entertain while informing — keep the viewer engaged with visual variety.
 
 **Video Clip Requirements:**
-- **Duration:** Must match or exceed the voiceover duration for the corresponding segment. Extend or loop if necessary.
+- **Duration:** ~5 seconds per clip. Generate enough clips to cover the full voiceover duration for the segment.
 - **Resolution:** 1080x1920 (9:16 vertical)
-- **Content:** Must match the story and script section — visuals should be story-specific, not generic
-- **Motion:** Motion direction (zoom in, zoom out) can be baked into the video generation prompt OR applied as a post-processing layer via FFmpeg
-- **Quality:** Clips must be smooth and cinematic — stuttery, jerky, or artifacted clips are not acceptable
+- **Content:** Must match the specific sentence/idea being spoken at that moment.
+- **Motion:** Motion direction (zoom in, zoom out) can be baked into the video generation prompt OR applied as a post-processing layer via FFmpeg.
+- **Quality:** Clips must be smooth and cinematic — stuttery, jerky, or artifacted clips are not acceptable.
 
 **Video Generation Prompts:**
 Structure all video generation prompts to include:
@@ -176,12 +197,18 @@ xfade=transition=fade:duration=1:offset=<segment_duration - 1>
 
 ---
 
-### BRANDED END CARD & OUTRO PLACEMENT (v1.3 REVISED)
+### BRANDED END CARD & OUTRO PLACEMENT (v1.4 REVISED)
 
 Every video **MUST** conclude with a branded end card. This is a hard requirement — a video without an end card is incomplete.
 
+**Standard Outro Voiceover Line:**
+- The CTA section of every script ends with the exact line: "Find sources in the comment section, and follow for what matters in AI."
+- The outro clip plays while the voiceover says this standard closing line.
+- The voiceover audio must extend into the outro section to cover this line.
+- The outro is NOT silent — it has the closing voiceover line playing over it.
+
 **Outro Placement Must Be Natural:**
-- Outro must begin ONLY after the CTA completes.
+- Outro must begin as the voiceover transitions to the standard closing line.
 - Add a brief transition (fade or slight pause) before the outro.
 - No abrupt cuts into the outro.
 
@@ -217,13 +244,13 @@ ffmpeg -f concat -safe 0 -i filelist.txt -c copy final_with_endcard.mp4
 
 The assembly pipeline differs depending on whether AI-generated video clips or static image fallback is used.
 
-**Primary Mode — AI Video Clips:**
-1. Generate a video clip for each script section (Hook, Context, Significance, CTA). Ensure clip duration matches or exceeds the voiceover duration for that segment.
+**Primary Mode — AI Video Clips (v1.4):**
+1. Generate multiple ~5-second video clips for each script section (Hook, Context, Significance, CTA) based on voiceover duration. Do NOT stretch or loop clips.
 2. Validate orientation (must be 9:16 / 1080x1920) for each clip.
 3. If zoom motion was not baked into the generation prompt, apply eased zoom via FFmpeg as a post-processing step.
 4. Concatenate clips with smooth crossfade transitions (1-second xfade). Do NOT shorten the video to fit transitions.
 5. Add the voiceover audio track. Ensure total video length >= audio length.
-6. Append the branded end card (3-second clip with fade-in) ONLY after the CTA audio completes.
+6. Append the branded end card (3-second clip with fade-in) as the voiceover transitions to the standard closing line. The outro is NOT silent.
 7. Encode final video as H.264/AAC MP4 at 1080x1920, 30fps.
 
 **Fallback Mode — Static Images with Zoom:**
@@ -248,18 +275,19 @@ The assembly pipeline differs depending on whether AI-generated video clips or s
 5. Proceed to assembly.
 
 **Assembly Pipeline:**
-1. For video clips: concatenate with crossfade transitions, apply zoom post-processing if needed. Ensure visual clips are extended or looped to match audio duration.
+1. For video clips: concatenate with crossfade transitions, apply zoom post-processing if needed. Ensure enough ~5-second clips are generated to match audio duration (do NOT stretch or loop).
 2. For static images (fallback): apply the assigned eased zoom effect via `zoompan` for the required duration, then concatenate.
 3. Set output resolution to 1080x1920 and framerate to 30 fps.
 4. Apply crossfade transitions between segments.
 5. Add voiceover audio track.
-6. Append the branded end card (3-second clip with fade-in) after the CTA completes.
+6. Append the branded end card (3-second clip with fade-in) as the voiceover transitions to the standard closing line.
 7. Encode final video as H.264/AAC MP4.
 
 ---
 
 ## Notes
 
+- v1.4: Introduced multi-clip scenes (~5s clips) instead of one long clip per segment. Added standard outro voiceover line playing over the branded end card.
 - v1.3: Removed hard duration constraints (30-40s cap). Introduced script-driven elastic timeline (45-90s target). Enforced visual clip duration to match or exceed voiceover duration per segment. Replaced hard cuts with fades/crossfades. Ensured outro is appended only after CTA completes naturally with a transition.
 - v1.2: Switched primary visual mode from static images to AI-generated video clips. Removed all pan effects. Standardized on smooth zoom in/zoom out only. Updated motion mapping. Added fallback mode for static images with zoom.
 - v1.1: Major revision — removed random/constant motion, added standardized motion system with easing, enforced vertical-only orientation, added branded end card.

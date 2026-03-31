@@ -1,6 +1,6 @@
 # Script Writer
 
-**Version:** v1.0  
+**Version:** v1.1  
 **Owner:** Manu  
 **Last Updated:** 2026-03-30
 
@@ -32,7 +32,7 @@ Each section must have clear timing guidance.
 1. **HOOK** (first 2 seconds)
 2. **CONTEXT** (what happened)
 3. **SIGNIFICANCE** (why it matters)
-4. **CTA** (follow or learn more)
+4. **CTA** (follow or learn more, ending with standard outro line)
 
 ---
 
@@ -48,6 +48,17 @@ Each section must have clear timing guidance.
 
 **Good:**
 "OpenAI just killed one of its biggest bets."
+
+---
+
+### CTA STRATEGY & STANDARD OUTRO (MANDATORY)
+
+The CTA section of every script **MUST** end with this exact line:
+"Find sources in the comment section, and follow for what matters in AI."
+
+- This line is a standard, non-negotiable part of every video script.
+- The TTS script must include this line as the final spoken words.
+- **Timing:** This line should be timed to play over the branded outro clip (the last ~6 seconds of the video). The voiceover generator should include this line in the audio.
 
 ---
 
@@ -111,4 +122,5 @@ Each section must include:
 
 ## Notes
 
+- v1.1: Added mandatory standard outro voiceover line ("Find sources in the comment section, and follow for what matters in AI.") to the end of every CTA, timed to play over the branded outro clip.
 - v1.0: Initial creation. Introduced 45-60s target duration (max 90s for exceptional news). Added strict hook strategy focusing on value without clickbait. Required clear timing guidance for each section.

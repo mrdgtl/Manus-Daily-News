@@ -1,6 +1,6 @@
 # Production Evaluator
 
-**Version:** v1.3  
+**Version:** v1.4  
 **Owner:** Manu  
 **Last Updated:** 2026-03-30
 
@@ -64,11 +64,12 @@ Score each of the following:
    - *Rule (v1.1):* If motion is present but uses linear movement (no easing), Visual Consistency is capped at 4/5.
    - *Rule (v1.2):* If video clips are used but exhibit stuttery, jerky, or inconsistent motion, Visual Consistency is capped at 4/5. Smooth, cinematic clips with consistent style earn full score eligibility.
    - *Rule (v1.2):* Any pan or slide motion detected in any segment caps Visual Consistency at 3/5. Only zoom and fade are acceptable.
+   - *Rule (v1.4):* If a single video clip is stretched or looped to cover a long audio segment instead of using multiple distinct clips per scene, Visual Consistency is capped at 3/5. Multiple distinct clips per scene (~5s each) is the expected standard.
 
-7. **End Card Check (Pass/Fail) — v1.1**
-   - **Pass:** The video includes the branded end card as the final segment (3 seconds, dark background, `[LOGO]` placeholder or actual logo, tagline "Daily AI news, simplified.").
-   - **Fail:** The end card is missing, incomplete, or does not match the brand specification.
-   - *Rule:* Missing end card **caps Video Quality Score at 3/5**. A video cannot achieve a perfect score without the end card.
+7. **End Card & Outro Check (Pass/Fail) — v1.4 REVISED**
+   - **Pass:** The video includes the branded end card as the final segment (3 seconds, dark background, `[LOGO]` placeholder or actual logo, tagline "Daily AI news, simplified.") AND the standard outro voiceover line plays over it.
+   - **Fail:** The end card is missing, incomplete, does not match the brand specification, OR the standard outro voiceover line is missing/silent.
+   - *Rule:* Missing the standard outro voiceover line is an **automatic fail**. The outro must have the closing voiceover playing over it, not silence. Missing end card **caps Video Quality Score at 3/5**. A video cannot achieve a perfect score without the end card and outro voiceover.
 
 ---
 
@@ -112,7 +113,7 @@ A perfect score (5/5 across the board) requires **ALL** of the following:
 - Smooth video clips (if using AI-generated clips: no stuttering, no artifacts, consistent visual style)
 - Clean and smooth transitions (crossfade with easing between segments, no hard cuts)
 - Branded voice consistency throughout
-- End card present, matching brand specification, and transitioning smoothly after CTA
+- End card present, matching brand specification, transitioning smoothly after CTA, and featuring the standard outro voiceover line
 - Professional polish across all segments
 - Accurate content
 
@@ -127,7 +128,7 @@ The video passes Quality Control ONLY if ALL the following conditions are met:
 - Video Quality Score >= 4
 - Sync Pass = Yes
 - Visual Consistency >= 4
-- End Card Check = Pass
+- End Card & Outro Check = Pass
 
 ---
 
@@ -136,7 +137,7 @@ The video passes Quality Control ONLY if ALL the following conditions are met:
 If the video fails to meet the Pass Conditions:
 - If Orientation Check = Fail: **immediate fail** — return for visual regeneration. Do not evaluate further.
 - If Timeline & Assembly Integrity = Fail: **immediate fail** — return for assembly correction. Do not evaluate further.
-- If End Card Check = Fail: flag as incomplete, cap Video Quality at 3/5, and return for assembly correction.
+- If End Card & Outro Check = Fail: **immediate fail** if voiceover is missing. If only visual end card is missing, flag as incomplete, cap Video Quality at 3/5, and return for assembly correction.
 - If pan, slide, or prohibited motion is detected: flag the affected segments, reduce scores accordingly, and return for motion correction.
 - For other failures: identify the failing component (Voice, Visuals, Sync, Motion, etc.).
 - Fix upstream and retry (up to 2 attempts).
@@ -146,6 +147,7 @@ If the video fails to meet the Pass Conditions:
 
 ## Notes
 
+- v1.4: Added penalty for stretching/looping single clips instead of using multi-clip scenes (caps Visual Consistency at 3/5). Made missing standard outro voiceover line an automatic fail.
 - v1.3: Added Timeline & Assembly Integrity gate check. Automatic fail if narration is cut off, CTA is truncated, outro interrupts abruptly, or video duration < audio duration. Lowered Video Quality Score for hard cuts between segments and abrupt outro transitions.
 - v1.2: Removed all references to pan effects from acceptable motion. Updated motion quality checks: only zoom in/out and fade are acceptable. Any pan, slide, or jerky motion lowers scores. Added evaluation criteria for AI-generated video clip smoothness — stuttery or jerky clips lower Visual Consistency.
 - v1.1: Added Orientation Check (automatic fail gate), End Card Check, motion quality evaluation criteria, and updated perfect score requirements to include orientation, eased motion, and end card.

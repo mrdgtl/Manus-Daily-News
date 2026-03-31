@@ -1,5 +1,23 @@
 # Prompt System Changelog
 
+## v1.6 — 2026-03-30
+
+**v6 Production Upgrade — Multi-Clip Scenes and Standard Outro Voiceover**
+
+- Updated `visual-generator.md` to v1.4:
+  - Replaced "one long clip per segment" with multi-clip scenes (~5s clips).
+  - Added calculation rules for determining clip count based on voiceover duration.
+  - Added standard outro voiceover line integration playing over the branded end card.
+- Updated `track1-briefing/script-writer.md` to v1.1:
+  - Added mandatory standard outro voiceover line ("Find sources in the comment section, and follow for what matters in AI.") to the end of every CTA.
+  - Specified timing for the outro line to play over the branded outro clip.
+- Updated `production-evaluator.md` to v1.4:
+  - Added penalty (Visual Consistency capped at 3/5) for stretching/looping single clips instead of using multi-clip scenes.
+  - Made missing standard outro voiceover line an automatic fail.
+- Updated `OPERATIONAL-WORKFLOW.md`:
+  - Updated Prompt File Authority table to reflect v1.4 for visual-generator and production-evaluator, and v1.1 for script-writer.
+  - Updated Video Assembly Instructions to reflect multi-clip generation and standard outro voiceover.
+
 ## v1.5 — 2026-03-30
 
 **v5 Timeline and Assembly Upgrade — Elastic Timeline and Outro Fixes**
