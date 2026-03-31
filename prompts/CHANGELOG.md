@@ -1,5 +1,20 @@
 # Prompt System Changelog
 
+## v1.7 — 2026-03-30
+
+**v7 Production Upgrade — Outro Refinement and Elastic Clip Calculation**
+
+- Updated `visual-generator.md` to v1.5:
+  - Updated standard outro voiceover line to "Sources in the comments. Follow for what matters in AI."
+  - Replaced rigid 5-second clip division with elastic clip calculation rules (3-8s range, cutting on natural beats).
+- Updated `track1-briefing/script-writer.md` to v1.2:
+  - Updated standard outro voiceover line to "Sources in the comments. Follow for what matters in AI."
+- Updated `production-evaluator.md` to v1.5:
+  - Updated standard outro voiceover line reference.
+- Updated `OPERATIONAL-WORKFLOW.md`:
+  - Updated Prompt File Authority table to reflect v1.5 for visual-generator and production-evaluator, and v1.2 for script-writer.
+  - Updated Video Assembly Instructions to reflect the new standard outro voiceover line.
+
 ## v1.6 — 2026-03-30
 
 **v6 Production Upgrade — Multi-Clip Scenes and Standard Outro Voiceover**

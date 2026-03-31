@@ -1,6 +1,6 @@
 # Visual Generator
 
-**Version:** v1.4  
+**Version:** v1.5  
 **Owner:** Manu  
 **Last Updated:** 2026-03-30
 
@@ -75,10 +75,15 @@ Replace the "one long clip per segment" approach with multiple short clips per s
 - Each clip should have distinct, relevant visuals that match the specific sentence/idea being spoken.
 - This makes the video feel dynamic and entertaining, like shattering news.
 
-**How to calculate clips needed:**
-- Measure the voiceover duration for each segment.
-- Divide by ~5 seconds to determine how many clips are needed.
-- Example: a 15-second Context segment needs 3 clips, each ~5 seconds.
+**How to calculate clips needed (Elastic Approach):**
+- Clips should be approximately 5 seconds each, but this is a guideline, not a hard rule.
+- The system should read the script structure and identify natural visual beats — not every sentence is its own clip, and not every idea takes exactly 5 seconds.
+- A short punchy idea might be a 3-second clip; a more complex visual might hold for 6-7 seconds.
+- The goal is to match the rhythm of the narration — cuts should happen on natural beats in the narration, not on a fixed timer.
+- The ~5 second average is a target to keep things dynamic without being frantic.
+- Minimum clip duration: 3 seconds (anything shorter feels jarring).
+- Maximum clip duration: 8 seconds (anything longer feels static).
+- The system should aim for visual variety that serves the story, not clip count for its own sake.
 - Each clip gets its own visual prompt matching the specific idea being spoken at that moment.
 
 **Visual variety within a scene:**
@@ -202,7 +207,7 @@ xfade=transition=fade:duration=1:offset=<segment_duration - 1>
 Every video **MUST** conclude with a branded end card. This is a hard requirement — a video without an end card is incomplete.
 
 **Standard Outro Voiceover Line:**
-- The CTA section of every script ends with the exact line: "Find sources in the comment section, and follow for what matters in AI."
+- The CTA section of every script ends with the exact line: "Sources in the comments. Follow for what matters in AI."
 - The outro clip plays while the voiceover says this standard closing line.
 - The voiceover audio must extend into the outro section to cover this line.
 - The outro is NOT silent — it has the closing voiceover line playing over it.
@@ -287,6 +292,7 @@ The assembly pipeline differs depending on whether AI-generated video clips or s
 
 ## Notes
 
+- v1.5: Updated standard outro voiceover line. Added elastic clip calculation rules (3-8s range, natural beats) to replace rigid 5-second division.
 - v1.4: Introduced multi-clip scenes (~5s clips) instead of one long clip per segment. Added standard outro voiceover line playing over the branded end card.
 - v1.3: Removed hard duration constraints (30-40s cap). Introduced script-driven elastic timeline (45-90s target). Enforced visual clip duration to match or exceed voiceover duration per segment. Replaced hard cuts with fades/crossfades. Ensured outro is appended only after CTA completes naturally with a transition.
 - v1.2: Switched primary visual mode from static images to AI-generated video clips. Removed all pan effects. Standardized on smooth zoom in/zoom out only. Updated motion mapping. Added fallback mode for static images with zoom.

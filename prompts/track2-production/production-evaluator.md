@@ -1,6 +1,6 @@
 # Production Evaluator
 
-**Version:** v1.4  
+**Version:** v1.5  
 **Owner:** Manu  
 **Last Updated:** 2026-03-30
 
@@ -147,6 +147,7 @@ If the video fails to meet the Pass Conditions:
 
 ## Notes
 
+- v1.5: Updated standard outro voiceover line to "Sources in the comments. Follow for what matters in AI."
 - v1.4: Added penalty for stretching/looping single clips instead of using multi-clip scenes (caps Visual Consistency at 3/5). Made missing standard outro voiceover line an automatic fail.
 - v1.3: Added Timeline & Assembly Integrity gate check. Automatic fail if narration is cut off, CTA is truncated, outro interrupts abruptly, or video duration < audio duration. Lowered Video Quality Score for hard cuts between segments and abrupt outro transitions.
 - v1.2: Removed all references to pan effects from acceptable motion. Updated motion quality checks: only zoom in/out and fade are acceptable. Any pan, slide, or jerky motion lowers scores. Added evaluation criteria for AI-generated video clip smoothness — stuttery or jerky clips lower Visual Consistency.

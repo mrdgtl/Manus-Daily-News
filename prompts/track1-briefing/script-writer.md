@@ -1,6 +1,6 @@
 # Script Writer
 
-**Version:** v1.1  
+**Version:** v1.2  
 **Owner:** Manu  
 **Last Updated:** 2026-03-30
 
@@ -54,7 +54,7 @@ Each section must have clear timing guidance.
 ### CTA STRATEGY & STANDARD OUTRO (MANDATORY)
 
 The CTA section of every script **MUST** end with this exact line:
-"Find sources in the comment section, and follow for what matters in AI."
+"Sources in the comments. Follow for what matters in AI."
 
 - This line is a standard, non-negotiable part of every video script.
 - The TTS script must include this line as the final spoken words.
@@ -122,5 +122,6 @@ Each section must include:
 
 ## Notes
 
+- v1.2: Updated standard outro voiceover line to "Sources in the comments. Follow for what matters in AI."
 - v1.1: Added mandatory standard outro voiceover line ("Find sources in the comment section, and follow for what matters in AI.") to the end of every CTA, timed to play over the branded outro clip.
 - v1.0: Initial creation. Introduced 45-60s target duration (max 90s for exceptional news). Added strict hook strategy focusing on value without clickbait. Required clear timing guidance for each section.
